@@ -4,126 +4,229 @@
   <meta charset="UTF-8">
   <title>Escrita e autoria na formação superior: experiência, técnica e uso de IA na UEL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     :root {
       --bg-page: #f3f4f6;
       --bg-card: #ffffff;
-      --border-subtle: #e5e7eb;
+      --border-subtle: #d1d5db;
+      --border-strong: #9ca3af;
+
       --text-main: #111827;
       --text-muted: #4b5563;
-      --accent: #1d4ed8;
-      --accent-soft: #eff6ff;
+      --text-soft: #6b7280;
+
+      /* Paleta inspirada na UEL */
+      --accent: #009640;        /* verde principal */
+      --accent-dark: #006432;   /* verde escuro */
+      --accent-soft: #e6f4ec;   /* verde clarinho */
+      --accent-gold: #fbbf24;   /* amarelo de apoio */
     }
 
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #e5e7eb, #f9fafb 45%, #e5e7eb 90%);
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      background: radial-gradient(circle at top left, #e5f3ea 0, #f3f4f6 38%, #eef2ff 100%);
       color: var(--text-main);
-      line-height: 1.6;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
     .page {
-      max-width: 1040px;
+      max-width: 1120px;
       margin: 2.5rem auto 3.5rem;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
     }
 
-    .card {
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .site-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .uel-logo-wrap {
+      flex-shrink: 0;
+      padding: .4rem .65rem;
+      border-radius: 0.9rem;
+      background: rgba(0, 150, 64, 0.05);
+      border: 1px solid rgba(0, 150, 64, 0.15);
+    }
+
+    .uel-logo {
+      display: block;
+      height: 64px;
+      width: auto;
+    }
+
+    .site-header-text {
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+    }
+
+    .site-header-text span {
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+
+    .site-header-text strong {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .site-header-pill {
+      padding: .4rem .8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      font-size: .81rem;
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+    }
+
+    .site-header-pill::before {
+      content: "";
+      width: .55rem;
+      height: .55rem;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .project-card {
       background: var(--bg-card);
-      border-radius: 1rem;
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
-      padding: 2.5rem 2.75rem 2.75rem;
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 1.4rem;
+      padding: 2.2rem 2.4rem 2.6rem;
+      box-shadow:
+        0 24px 55px rgba(15, 23, 42, 0.18),
+        0 0 0 1px rgba(15, 23, 42, 0.03);
+      border: 1px solid rgba(148, 163, 184, 0.5);
     }
 
-    header.project-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
+    @media (max-width: 768px) {
+      .project-card {
+        padding: 1.6rem 1.4rem 2.1rem;
+      }
+
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .uel-logo {
+        height: 54px;
+      }
+    }
+
+    .project-header {
       border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.4rem;
+      margin-bottom: 1.6rem;
     }
 
     .project-tag {
       display: inline-flex;
       align-items: center;
       gap: .4rem;
-      font-size: .75rem;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      padding: .25rem .7rem;
+      padding: .22rem .7rem;
+      font-size: .78rem;
       border-radius: 999px;
       background: var(--accent-soft);
-      color: var(--accent);
+      color: var(--accent-dark);
       font-weight: 600;
-      margin-bottom: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-bottom: .75rem;
     }
 
     .project-tag::before {
       content: "";
-      width: .45rem;
-      height: .45rem;
+      width: .5rem;
+      height: .5rem;
       border-radius: 999px;
-      background: var(--accent);
+      border: 2px solid var(--accent-dark);
+      box-shadow: 0 0 0 2px rgba(0, 150, 64, 0.18);
     }
 
     h1 {
       font-size: 1.9rem;
       line-height: 1.25;
-      margin: 0 0 .5rem;
+      margin: 0 0 .45rem;
       font-weight: 700;
       letter-spacing: -.02em;
+      text-transform: uppercase;
+      color: #020617;
     }
 
     .authors {
       font-size: .95rem;
       color: var(--text-muted);
-      margin-bottom: .25rem;
+      margin-bottom: .45rem;
     }
 
     .subtitle {
       font-size: .9rem;
-      color: var(--text-muted);
+      color: var(--text-soft);
+      max-width: 48rem;
     }
 
     .toc {
-      margin-bottom: 2rem;
-      padding: 1.25rem 1.5rem;
-      border-radius: .9rem;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      font-size: .92rem;
+      border-radius: 1rem;
+      padding: 1rem 1.2rem 1.1rem;
+      background: linear-gradient(135deg, rgba(0, 150, 64, 0.04), rgba(248, 250, 252, 0.95));
+      border: 1px solid rgba(148, 163, 184, .4);
+      margin-bottom: 1.9rem;
     }
 
     .toc-title {
-      font-size: .8rem;
-      text-transform: uppercase;
+      font-size: .88rem;
+      font-weight: 700;
       letter-spacing: .12em;
-      color: #6b7280;
-      font-weight: 600;
-      margin-bottom: .25rem;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: .1rem;
     }
 
     .toc small {
       display: block;
-      color: #9ca3af;
-      margin-bottom: .35rem;
+      font-size: .78rem;
+      color: var(--text-soft);
+      margin-bottom: .5rem;
     }
 
     .toc ol {
-      margin: .6rem 0 0;
+      margin: 0;
       padding-left: 1.2rem;
-      column-gap: 3rem;
+      columns: 2;
+      column-gap: 2.2rem;
+      font-size: .86rem;
     }
 
-    @media (min-width: 800px) {
+    @media (max-width: 768px) {
       .toc ol {
-        columns: 2;
+        columns: 1;
       }
     }
 
@@ -132,127 +235,191 @@
     }
 
     .toc a {
-      color: var(--accent);
+      color: var(--text-muted);
       text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      padding-bottom: .04rem;
+      transition: color .17s ease, border-color .17s ease;
     }
 
     .toc a:hover {
-      text-decoration: underline;
+      color: var(--accent-dark);
+      border-color: rgba(0, 150, 64, 0.4);
     }
 
-    h2 {
+    .section {
+      margin-bottom: 1.9rem;
+    }
+
+    .section:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .section h2 {
       font-size: 1.25rem;
-      margin-top: 2rem;
-      margin-bottom: .6rem;
-      padding-top: .3rem;
-      padding-bottom: .3rem;
-      border-bottom: 1px solid var(--border-subtle);
+      margin: 1.2rem 0 .7rem;
+      color: var(--accent-dark);
       letter-spacing: -.01em;
     }
 
-    h3 {
-      font-size: 1.02rem;
-      margin-top: 1.5rem;
-      margin-bottom: .3rem;
-      color: #111827;
+    .section h3 {
+      font-size: 1rem;
+      margin: 1rem 0 .35rem;
+      color: #022c22;
     }
 
     p {
-      margin: .45rem 0;
-      text-align: justify;
-    }
-
-    strong {
-      font-weight: 600;
-    }
-
-    ul, ol {
-      margin: .35rem 0 .75rem 1.25rem;
-      padding-left: 1rem;
-    }
-
-    li {
-      margin: .2rem 0;
+      margin: 0 0 .85rem;
+      font-size: .94rem;
+      color: var(--text-main);
     }
 
     .keywords {
-      margin-top: .75rem;
-      font-size: .92rem;
+      font-size: .9rem;
       color: var(--text-muted);
     }
 
-    .keywords strong {
-      color: #111827;
+    ul, ol {
+      padding-left: 1.2rem;
+      margin: 0 0 .85rem;
+      font-size: .94rem;
+    }
+
+    li + li {
+      margin-top: .1rem;
+    }
+
+    .pill-axis {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .16rem .6rem;
+      border-radius: 999px;
+      background: rgba(0, 150, 64, 0.06);
+      border: 1px solid rgba(0, 150, 64, 0.2);
+      font-size: .78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--accent-dark);
+      margin-bottom: .4rem;
+    }
+
+    .pill-axis::before {
+      content: "";
+      width: .38rem;
+      height: .38rem;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: .3rem 0 1.3rem;
     }
 
     table {
       width: 100%;
+      min-width: 640px;
       border-collapse: collapse;
-      margin: 1rem 0 1.5rem;
-      font-size: .88rem;
+      font-size: .85rem;
+      background: #f9fafb;
     }
 
     th, td {
       border: 1px solid var(--border-subtle);
       padding: .55rem .7rem;
       vertical-align: top;
+      text-align: left;
     }
 
     th {
-      background: #f9fafb;
+      background: #eef2ff;
+      color: #020617;
       font-weight: 600;
     }
 
-    caption {
-      text-align: left;
-      font-size: .84rem;
-      color: #6b7280;
-      margin-bottom: .25rem;
+    tr:nth-child(even) td {
+      background: #f9fafb;
     }
 
-    .section-note {
+    .results-subtitle {
+      font-weight: 600;
+      color: var(--accent-dark);
+    }
+
+    .referencias-list {
+      list-style: none;
+      padding-left: 0;
       font-size: .9rem;
-      color: #6b7280;
-      margin-top: .3rem;
     }
 
-    .section-block {
-      margin-top: 1.2rem;
-      padding: .85rem 1rem;
-      border-radius: .75rem;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      font-size: .92rem;
+    .referencias-list li {
+      margin-bottom: .5rem;
+      padding-left: 1.1rem;
+      position: relative;
     }
 
-    .section-block ul {
-      margin-bottom: 0;
+    .referencias-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent-dark);
     }
 
-    .year-label {
-      font-weight: 600;
-      margin-top: 1.4rem;
-    }
-
-    footer {
-      margin-top: 2.5rem;
+    .back-to-top {
       font-size: .8rem;
-      color: #9ca3af;
-      text-align: center;
+      margin-top: .5rem;
+      display: inline-block;
+      color: var(--accent-dark);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
     }
+
+    .back-to-top:hover {
+      border-color: rgba(0, 150, 64, .5);
+    }
+
   </style>
 </head>
 <body>
+
 <div class="page">
-  <article class="card">
+
+  <header class="site-header">
+    <div class="site-header-left">
+      <div class="uel-logo-wrap">
+        <img src="UEL-vertical-completa-cor (1).png"
+             alt="Logomarca da Universidade Estadual de Londrina"
+             class="uel-logo">
+      </div>
+      <div class="site-header-text">
+        <span>Universidade Estadual de Londrina</span>
+        <strong>Centro de Educação, Comunicação e Artes · PROEX / PROGRAD</strong>
+      </div>
+    </div>
+
+    <div class="site-header-pill">
+      Projeto de pesquisa e extensão · IA, escrita e autoria
+    </div>
+  </header>
+
+  <article class="project-card">
+
     <header class="project-header">
       <div class="project-tag">Pré-projeto UEL</div>
       <h1>ESCRITA E AUTORIA NA FORMAÇÃO SUPERIOR: EXPERIÊNCIA, TÉCNICA E USO DE IA NA UEL</h1>
       <div class="authors">Darcísio Natal Muraro · Guilherme Fonseca de Oliveira</div>
-      <div class="subtitle">Projeto de pesquisa e extensão em escrita, autoria e inteligência artificial na formação superior</div>
+      <p class="subtitle">
+        Projeto que articula diagnóstico institucional, estudo de caso na Pedagogia e ações
+        de extensão para analisar criticamente o uso de inteligência artificial em práticas de escrita
+        na formação superior da UEL.
+      </p>
     </header>
 
-    <section class="toc">
+    <nav class="toc" aria-label="Sumário">
       <div class="toc-title">Sumário</div>
       <small>Clique para navegar pelas seções</small>
       <ol>
@@ -260,6 +427,7 @@
         <li><a href="#introducao">Introdução</a></li>
         <li><a href="#problema">Problema</a></li>
         <li><a href="#justificativa">Justificativa</a></li>
+        <li><a href="#experiencias">Experiências análogas e iniciativas correlatas</a></li>
         <li><a href="#referencial">Referencial teórico</a></li>
         <li><a href="#objetivos">Objetivos</a></li>
         <li><a href="#metodologia">Metodologia</a></li>
@@ -267,479 +435,1230 @@
         <li><a href="#acompanhamento">Acompanhamento e avaliação dos resultados</a></li>
         <li><a href="#cronograma">Cronograma</a></li>
         <li><a href="#disseminacao">Disseminação dos resultados</a></li>
-        <li><a href="#recursos">Recursos e fomento</a></li>
+        <li><a href="#recursos">Recursos da comunidade, recursos institucionais e fomento</a></li>
         <li><a href="#referencias">Referências</a></li>
       </ol>
-    </section>
+    </nav>
 
-    <section id="resumo">
+    <!-- RESUMO -->
+    <section id="resumo" class="section">
       <h2>Resumo</h2>
-      <p>O projeto investiga como o uso de sistemas de inteligência artificial em tarefas de escrita reconfigura a experiência da palavra e da autoria na formação superior da UEL. Tomando John Dewey como referência central, parte-se da distinção entre experiências educativas, que ampliam continuidade e interação no aprender, e experiências deseducativas, que produzem dependência, ruptura de percurso e empobrecimento da relação com a palavra.</p>
-      <p>A pesquisa organiza-se em três eixos articulados. O Eixo 1 realiza um diagnóstico transversal, por meio de questionários on-line aplicados a estudantes e docentes de cursos selecionados, mapeando frequência, contextos e finalidades de uso da IA na escrita acadêmica, bem como representações e percepções formativas associadas a esses usos. O Eixo 2 desenvolve um estudo de caso intensivo na Pedagogia, focalizando práticas de escrita de si com e sem IA; com base em Dewey e na noção foucaultiana de escrita de si como tecnologia de si, analisa perfis de coescrita, modos de subjetivação e deslocamentos na autoria e na responsabilidade pela palavra. O Eixo 3 traduz os achados em ações de extensão e formação na UEL, por meio de oficinas, encontros com coordenações, grupos de trabalho e materiais de apoio que subsidiem decisões pedagógicas e institucionais.</p>
-      <p>Espera-se produzir um quadro teórico-empírico capaz de orientar usos críticos de IA na escrita e contribuir para uma educação democrática que preserve a autoria como exercício de autonomia, responsabilidade e reflexão crítica.</p>
-      <p class="keywords"><strong>Palavras-chave:</strong> escrita acadêmica; inteligência artificial; experiência; autoria; ensino superior.</p>
+      <p>
+        O projeto investiga como o uso de sistemas de inteligência artificial em tarefas de escrita
+        reconfigura a experiência da palavra e da autoria na formação superior da UEL. Tomando John Dewey
+        como referência central, parte-se da distinção entre experiências educativas, que ampliam
+        continuidade e interação no aprender, e experiências deseducativas, que produzem dependência,
+        ruptura de percurso e empobrecimento da relação com a palavra.
+      </p>
+      <p>
+        A pesquisa organiza-se em três eixos articulados. O Eixo 1 realiza um diagnóstico transversal,
+        por meio de questionários on-line aplicados a estudantes e docentes de cursos selecionados,
+        mapeando frequência, contextos e finalidades de uso da IA na escrita acadêmica, bem como
+        representações e percepções formativas associadas a esses usos. O Eixo 2 desenvolve um estudo
+        de caso intensivo na Pedagogia, focalizando práticas de escrita de si com e sem IA; com base em
+        Dewey e na noção foucaultiana de escrita de si como tecnologia de si, analisa perfis de coescrita,
+        modos de subjetivação e deslocamentos na autoria e na responsabilidade pela palavra. O Eixo 3
+        traduz os achados em ações de extensão e formação na UEL, por meio de oficinas, encontros com
+        coordenações, grupos de trabalho e materiais de apoio que subsidiem decisões pedagógicas e
+        institucionais.
+      </p>
+      <p>
+        Espera-se produzir um quadro teórico-empírico capaz de orientar usos críticos de IA na escrita
+        e contribuir para uma educação democrática que preserve a autoria como exercício de autonomia,
+        responsabilidade e reflexão crítica.
+      </p>
+      <p class="keywords">
+        <strong>Palavras-chave:</strong> escrita acadêmica; inteligência artificial; experiência;
+        autoria; ensino superior.
+      </p>
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="introducao">
+    <!-- INTRODUÇÃO -->
+    <section id="introducao" class="section">
       <h2>Introdução</h2>
-      <p>A difusão recente de sistemas de inteligência artificial voltados à produção de linguagem recoloca as práticas de escrita e autoria na formação superior no centro de uma disputa simultaneamente formativa, política e tecnológica. Em poucos anos, modelos de linguagem passaram a ser incorporados por estudantes e docentes em atividades de leitura, escrita e revisão de textos – de listas de exercícios e relatórios a resenhas, projetos, planos de aula, códigos e trabalhos de conclusão de curso –, ao mesmo tempo em que organismos internacionais e instâncias editoriais vêm produzindo diretrizes para regular seu uso. A Universidade Estadual de Londrina (UEL) não está à margem desse processo: cursos de diferentes áreas começam a negociar, de forma dispersa, permissões, proibições e usos “tolerados” de IA, sem que se disponha ainda de um quadro analítico comum para avaliar o que essas práticas produzem em termos formativos.</p>
-      <p>Tomando John Dewey como referência central, este projeto parte da premissa de que não basta reconhecer que há “experiências” envolvendo IA na universidade: é preciso perguntar que tipo de experiências estão em jogo. Para Dewey, experiências podem ser educativas – quando ampliam a continuidade do aprender e qualificam a interação entre sujeito e ambiente – ou deseducativas, quando bloqueiam o crescimento, produzem dependência ou empobrecem a relação com o mundo e consigo mesmo. Aplicado às práticas de escrita com IA, esse critério desloca o debate de um juízo abstrato sobre a tecnologia (“usar ou não usar”) para a análise das condições concretas em que estudantes e docentes mobilizam modelos de linguagem, com quais mediações e com quais efeitos sobre autoria, autonomia e responsabilidade pela palavra.</p>
-      <p>Nesse horizonte mais amplo da escrita acadêmica, certas práticas assumem relevo particular. Entre elas está a escrita de si – diários de formação, narrativas autobiográficas, textos reflexivos em primeira pessoa –, na qual o sujeito elabora experiências, experimenta uma voz própria e aprende a responder pelo que diz. Nesses casos, a palavra não é apenas veículo de informação, mas exercício de si e com os outros, assumindo o estatuto de tecnologia de si em sentido foucaultiano. Quando esse tipo de escrita passa a ser compartilhado com sistemas de IA treinados em grandes corpora textuais, o arranjo se reconfigura: em vez de ferramenta silenciosa, a técnica assume a forma de uma inteligência algorítmica que sugere formulações, reescreve trechos, organiza argumentos e oferece enquadramentos possíveis para a memória e para a narrativa de si. A tensão desloca-se, então, da oposição “uso ou não uso de IA” para a relação entre duas inteligências: de um lado, a inteligência singular, biográfica e situada de quem escreve; de outro, a inteligência algorítmica, estatística e infraestrutural, que opera a partir de padrões extraídos de dados em larga escala.</p>
-      <p>Ao mesmo tempo, essas práticas não se dão em um vazio sociotécnico. A coescrita com IA se insere em uma cultura digital marcada pela aceleração comunicacional e pela pressão por transparência e exposição permanentes, bem como por infraestruturas técnico-econômicas concentradas em poucos países e corporações, que definem quais dados, línguas e perspectivas se tornam disponíveis (ou silenciosas) nos modelos de linguagem. Nesse horizonte, a linguagem e as experiências de escrita correm o risco de serem enquadradas como recursos disponíveis, o que reforça a necessidade de uma leitura crítica das condições sociotécnicas que cercam a palavra na universidade, sem perder de vista que essas condições atravessam, de modo desigual, cursos, áreas e perfis de estudantes.</p>
-      <p>Embora se multipliquem normas e recomendações sobre o uso de IA em textos acadêmicos – enfatizando transparência e responsabilidade humana pela autoria –, ainda são escassas, no Brasil, as investigações empíricas que examinam, em situação, como sujeitos e algoritmos escrevem juntos na formação superior. Falta compreender, em escala institucional, como estudantes de diferentes cursos vêm mobilizando a IA em tarefas de escrita; como docentes estão autorizando, orientando ou restringindo esses usos; e, em profundidade, o que acontece com a experiência da palavra e com a autoria quando textos de escrita de si passam a ser co-produzidos com modelos de linguagem.</p>
-      <p>É nesse entrecruzamento que se situa o problema central deste projeto, organizado em três eixos articulados. O Eixo 1 realiza um diagnóstico transversal do uso de IA na formação superior da UEL, por meio de questionários aplicados a estudantes e docentes de cursos selecionados, com o objetivo de mapear frequência, tipos de uso, representações predominantes da IA e percepções sobre impactos formativos, autoria e integridade acadêmica em diferentes áreas. O Eixo 2 desenvolve um estudo de caso intensivo na graduação em Pedagogia, tomando as práticas de escrita de si – diários de formação, narrativas autobiográficas, textos reflexivos em primeira pessoa – como laboratório aprofundado para analisar, à luz de Dewey e Foucault, em que condições a coescrita com IA configura experiências educativas ou deseducativas e como se deslocam as fronteiras da autoria de futuros pedagogos. O Eixo 3, por sua vez, articula extensão e formação, devolvendo à comunidade acadêmica os resultados dos eixos anteriores na forma de oficinas, formações e materiais de apoio que contribuam para orientar usos críticos de IA em práticas de escrita e autoria na UEL.</p>
-      <p>Ao articular um diagnóstico institucional amplo, um estudo de caso aprofundado e uma frente de devolutiva formativa, o projeto busca construir, com base em Dewey como fundamento global e com a contribuição específica de Foucault no campo da escrita de si, um quadro teórico-empírico capaz de qualificar o debate sobre experiência, técnica e autoria na formação superior, oferecendo subsídios concretos para decisões pedagógicas e institucionais sobre o uso de IA na UEL.</p>
+
+      <p>
+        A difusão recente de sistemas de inteligência artificial voltados à produção de linguagem
+        recoloca as práticas de escrita e autoria na formação superior no centro de uma disputa
+        simultaneamente formativa, política e tecnológica. Em poucos anos, modelos de linguagem
+        passaram a ser incorporados por estudantes e docentes em atividades de leitura, escrita e
+        revisão de textos – de listas de exercícios e relatórios a resenhas, projetos, planos de aula,
+        códigos e trabalhos de conclusão de curso –, ao mesmo tempo em que organismos internacionais
+        e instâncias editoriais vêm produzindo diretrizes para regular seu uso. A Universidade Estadual
+        de Londrina (UEL) não está à margem desse processo: cursos de diferentes áreas começam a
+        negociar, de forma dispersa, permissões, proibições e usos “tolerados” de IA, sem que se
+        disponha ainda de um quadro analítico comum para avaliar o que essas práticas produzem
+        em termos formativos.
+      </p>
+
+      <p>
+        Tomando John Dewey como referência central, este projeto parte da premissa de que não basta
+        reconhecer que há “experiências” envolvendo IA na universidade: é preciso perguntar que tipo
+        de experiências estão em jogo. Para Dewey, experiências podem ser educativas – quando ampliam
+        a continuidade do aprender e qualificam a interação entre sujeito e ambiente – ou
+        deseducativas, quando bloqueiam o crescimento, produzem dependência ou empobrecem a relação
+        com o mundo e consigo mesmo. Aplicado às práticas de escrita com IA, esse critério desloca
+        o debate de um juízo abstrato sobre a tecnologia (“usar ou não usar”) para a análise das
+        condições concretas em que estudantes e docentes mobilizam modelos de linguagem, com quais
+        mediações e com quais efeitos sobre autoria, autonomia e responsabilidade pela palavra.
+      </p>
+
+      <p>
+        Nesse horizonte mais amplo da escrita acadêmica, certas práticas assumem relevo particular.
+        Entre elas está a escrita de si – diários de formação, narrativas autobiográficas, textos
+        reflexivos em primeira pessoa –, na qual o sujeito elabora experiências, experimenta uma voz
+        própria e aprende a responder pelo que diz. Nesses casos, a palavra não é apenas veículo
+        de informação, mas exercício de si e com os outros, assumindo o estatuto de tecnologia de si
+        em sentido foucaultiano. Quando esse tipo de escrita passa a ser compartilhado com sistemas
+        de IA treinados em grandes corpora textuais, o arranjo se reconfigura: em vez de ferramenta
+        silenciosa, a técnica assume a forma de uma inteligência algorítmica que sugere formulações,
+        reescreve trechos, organiza argumentos e oferece enquadramentos possíveis para a memória
+        e para a narrativa de si.
+      </p>
+
+      <p>
+        A tensão desloca-se, então, da oposição “uso ou não uso de IA” para a relação entre duas
+        inteligências: de um lado, a inteligência singular, biográfica e situada de quem escreve;
+        de outro, a inteligência algorítmica, estatística e infraestrutural, que opera a partir
+        de padrões extraídos de dados em larga escala. Ao mesmo tempo, essas práticas não se dão
+        em um vazio sociotécnico. A coescrita com IA se insere em uma cultura digital marcada pela
+        aceleração comunicacional e pela pressão por transparência e exposição permanentes, bem como
+        por infraestruturas técnico-econômicas concentradas em poucos países e corporações, que
+        definem quais dados, línguas e perspectivas se tornam disponíveis (ou silenciosas) nos
+        modelos de linguagem.
+      </p>
+
+      <p>
+        Nesse horizonte, a linguagem e as experiências de escrita correm o risco de serem enquadradas
+        como recursos disponíveis, o que reforça a necessidade de uma leitura crítica das condições
+        sociotécnicas que cercam a palavra na universidade, sem perder de vista que essas condições
+        atravessam, de modo desigual, cursos, áreas e perfis de estudantes. Embora se multipliquem
+        normas e recomendações sobre o uso de IA em textos acadêmicos – enfatizando transparência
+        e responsabilidade humana pela autoria –, ainda são escassas, no Brasil, as investigações
+        empíricas que examinam, em situação, como sujeitos e algoritmos escrevem juntos na formação
+        superior.
+      </p>
+
+      <p>
+        Falta compreender, em escala institucional, como estudantes de diferentes cursos vêm
+        mobilizando a IA em tarefas de escrita; como docentes estão autorizando, orientando ou
+        restringindo esses usos; e, em profundidade, o que acontece com a experiência da palavra
+        e com a autoria quando textos de escrita de si passam a ser co-produzidos com modelos de
+        linguagem. É nesse entrecruzamento que se situa o problema central deste projeto, organizado
+        em três eixos articulados: diagnóstico transversal na UEL, estudo de caso intensivo na
+        Pedagogia e ações de extensão e formação que devolvam os resultados à comunidade acadêmica.
+      </p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="problema">
+    <!-- PROBLEMA -->
+    <section id="problema" class="section">
       <h2>Problema</h2>
-      <p>A investigação inscreve-se em uma questão mais ampla: o que o uso de sistemas de inteligência artificial faz à experiência da escrita e da autoria na formação superior na UEL. Em diferentes cursos, estudantes e docentes já recorrem a modelos de linguagem para apoiar a produção de relatórios, resenhas, textos reflexivos, TCCs, planos de aula, códigos e outros gêneros acadêmicos, frequentemente em meio a normativas locais ainda incipientes ou dispersas. À luz de John Dewey, isso significa perguntar que tipo de experiências estão sendo produzidas: experiências educativas, que ampliam a continuidade do aprender e qualificam a interação com o meio, ou experiências deseducativas, que reforçam dependência, ruptura de percurso e empobrecimento da relação com a palavra.</p>
-      <p>O projeto toma esse horizonte como problema central e o formula nos seguintes termos: <strong>Em que medida, e sob quais condições, o emprego de sistemas de inteligência artificial generativa em práticas de escrita na formação superior da UEL produz experiências educativas ou deseducativas, à luz de John Dewey, e reconfigura modos de autoria e de responsabilidade pela palavra?</strong></p>
-      <p>Essa pergunta articula o plano institucional, em que importa compreender como a IA vem sendo usada em diferentes cursos, com o plano micro de um estudo de caso intensivo na Pedagogia, em que a escrita de si é tomada como campo privilegiado para analisar a subjetivação e a autoria em chave foucaultiana. Desdobra-se, assim, em três frentes interligadas:</p>
+
+      <p>
+        A investigação inscreve-se em uma questão mais ampla: o que o uso de sistemas de inteligência
+        artificial faz à experiência da escrita e da autoria na formação superior na UEL. Em diferentes
+        cursos, estudantes e docentes já recorrem a modelos de linguagem para apoiar a produção de
+        relatórios, resenhas, textos reflexivos, TCCs, planos de aula, códigos e outros gêneros
+        acadêmicos, frequentemente em meio a normativas locais ainda incipientes ou dispersas.
+        À luz de John Dewey, isso significa perguntar que tipo de experiências estão sendo produzidas:
+        experiências educativas, que ampliam a continuidade do aprender e qualificam a interação com
+        o meio, ou experiências deseducativas, que reforçam dependência, ruptura de percurso e
+        empobrecimento da relação com a palavra.
+      </p>
+
+      <p>
+        O projeto toma esse horizonte como problema central e o formula nos seguintes termos:
+      </p>
+
+      <p>
+        <strong>
+          Em que medida, e sob quais condições, o emprego de sistemas de inteligência artificial
+          generativa em práticas de escrita na formação superior da UEL produz experiências educativas
+          ou deseducativas, à luz de John Dewey, e reconfigura modos de autoria e de responsabilidade
+          pela palavra?
+        </strong>
+      </p>
+
+      <p>
+        Essa pergunta articula o plano institucional, em que importa compreender como a IA vem sendo
+        usada em diferentes cursos, com o plano micro de um estudo de caso intensivo na Pedagogia,
+        em que a escrita de si é tomada como campo privilegiado para analisar a subjetivação e a
+        autoria em chave foucaultiana. Desdobra-se, assim, em três frentes interligadas:
+      </p>
+
       <ul>
-        <li><strong>Diagnóstico transversal (Eixo 1):</strong> como estudantes e docentes de cursos selecionados da UEL descrevem seus usos de IA em tarefas de escrita acadêmica, que representações constroem sobre esses sistemas e que efeitos formativos percebem nessas experiências;</li>
-        <li><strong>Estudo de caso intensivo (Eixo 2):</strong> em que condições a coescrita com IA, na escrita de si de estudantes de Pedagogia, configura experiências educativas ou deseducativas e desloca a escrita de si de uma tecnologia de si para formas de heterotecnologia de si;</li>
-        <li><strong>Extensão e formação (Eixo 3):</strong> como traduzir os achados dos dois primeiros eixos em ações formativas e materiais de apoio que apoiem usos críticos de IA na escrita acadêmica e na escrita de si, recolocando a autoria e a responsabilidade pela palavra no centro da formação superior.</li>
+        <li>
+          <strong>Diagnóstico transversal (Eixo 1):</strong> como estudantes e docentes de cursos
+          selecionados da UEL descrevem seus usos de IA em tarefas de escrita acadêmica, que
+          representações constroem sobre esses sistemas e que efeitos formativos percebem nessas
+          experiências;
+        </li>
+        <li>
+          <strong>Estudo de caso intensivo (Eixo 2):</strong> em que condições a coescrita com IA,
+          na escrita de si de estudantes de Pedagogia, configura experiências educativas ou
+          deseducativas e desloca a escrita de si de uma tecnologia de si para formas de
+          heterotecnologia de si;
+        </li>
+        <li>
+          <strong>Extensão e formação (Eixo 3):</strong> como traduzir os achados dos dois primeiros
+          eixos em ações formativas e materiais de apoio que apoiem usos críticos de IA na escrita
+          acadêmica e na escrita de si, recolocando a autoria e a responsabilidade pela palavra
+          no centro da formação superior.
+        </li>
       </ul>
-      <p>Dessa forma, o problema não se reduz a julgar abstratamente a “bondade” ou “periculosidade” da IA, mas a examinar, em situação, como a interação entre inteligência singular e inteligência algorítmica, mediada por práticas pedagógicas e por condições sociotécnicas específicas, interfere na experiência da palavra e na formação de autores na UEL.</p>
+
+      <p>
+        Dessa forma, o problema não se reduz a julgar abstratamente a “bondade” ou “periculosidade”
+        da IA, mas a examinar, em situação, como a interação entre inteligência singular e inteligência
+        algorítmica, mediada por práticas pedagógicas e por condições sociotécnicas específicas,
+        interfere na experiência da palavra e na formação de autores na UEL.
+      </p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="justificativa">
+    <!-- JUSTIFICATIVA -->
+    <section id="justificativa" class="section">
       <h2>Justificativa</h2>
-      <p>A relevância do estudo se apoia em três dimensões inter-relacionadas: formativa, teórico-metodológica e sociopolítica/institucional, articuladas em escala institucional (UEL como um todo) e em um recorte intensivo (Pedagogia e escrita de si), com devolutiva extensionista.</p>
-      <p>No plano formativo, o projeto parte da distinção deweyana entre experiências educativas e deseducativas. Dewey insiste que nem toda experiência é, por si só, formadora: certas vivências bloqueiam, distorcem ou empobrecem o desenvolvimento ulterior do sujeito. A qualidade formativa de uma experiência depende de dois critérios articulados: continuidade (o modo como cada vivência se encadeia às anteriores e abre possibilidades para experiências futuras) e interação (a relação ativa entre indivíduo e ambiente numa situação concreta de ação). Aplicar esses critérios ao uso de IA em práticas de escrita na graduação implica deslocar o debate de um juízo abstrato sobre a tecnologia para uma análise situada dos modos de uso. A justificativa formativa do projeto está em discernir, em escala institucional, em que condições a IA é mobilizada como apoio que reforça autonomia, reflexão e ampliação de repertórios e em que condições tende a produzir experiências deseducativas, marcadas por delegação acrítica, homogeneização discursiva e enfraquecimento do vínculo do estudante com a própria palavra. No Eixo 2, esse julgamento se torna particularmente sensível: quando a IA entra no ateliê da escrita de si, o que está em jogo é a própria experiência de autoformação e autoria de futuros pedagogos.</p>
-      <p>No plano teórico-metodológico, o estudo responde a uma lacuna específica do estado da arte. Normas editoriais e diretrizes internacionais recentes – como as posições do Committee on Publication Ethics, da World Association of Medical Editors, das redes SciELO e ASSAf e as orientações da UNESCO para o uso de IA na educação – têm enfatizado transparência, rastreabilidade e responsabilidade humana pela autoria, estabelecendo que modelos algorítmicos não podem ser considerados autores e que os sujeitos humanos permanecem integralmente responsáveis pelo conteúdo. Essas normativas, porém, dizem pouco sobre o que efetivamente acontece quando estudantes escrevem com IA em contextos formativos concretos e quase nada sobre como isso repercute na experiência da palavra e na autoria em cursos de graduação brasileiros. A literatura empírica ainda é incipiente tanto em diagnósticos institucionais sobre uso de IA em escrita acadêmica, quanto no exame aprofundado da coescrita em práticas de escrita de si.</p>
-      <p>O projeto se justifica, nesse sentido, por articular um referencial teórico-analítico centrado em John Dewey como fundamento geral (experiência educativa/deseducativa) e, no Eixo 2, em Michel Foucault para a escrita de si (tecnologias de si e subjetivação). Metodologicamente, a combinação entre diagnóstico transversal na UEL (Eixo 1), estudo de caso intensivo na Pedagogia (Eixo 2) e ações de extensão/formação (Eixo 3) permite produzir, ao mesmo tempo, um retrato institucional dos usos de IA na escrita e uma análise fina dos processos de coescrita em um contexto específico, oferecendo categorias e critérios analíticos que podem ser apropriados por docentes, cursos e programas de formação docente.</p>
-      <p>Por fim, a dimensão sociopolítica e institucional é particularmente relevante no contexto brasileiro e para uma universidade pública como a UEL. A coescrita com IA não ocorre em um vazio social, mas em um cenário atravessado por assimetrias de infraestrutura, dados e poder: plataformas e modelos de linguagem são desenvolvidos e operados por um número restrito de países e corporações, concentrando investimentos, capacidade técnica e definição de agendas de desenvolvimento. Muitas línguas, contextos culturais e experiências do Sul Global permanecem sub-representados nos conjuntos de dados que alimentam esses sistemas, o que implica vieses estruturais e riscos de apagamento de vozes e repertórios locais.</p>
-      <p>Ao mesmo tempo, a cultura digital contemporânea é marcada por fluxos comunicacionais acelerados, lógicas de enxame e pressões de transparência e exposição contínuas, que tendem a enquadrar linguagem e experiências como recursos disponíveis a serem otimizados. No âmbito da formação superior, essas tensões assumem peso adicional: estudantes e docentes são, simultaneamente, usuários dos sistemas de IA em sua própria escrita e, em muitos cursos, mediadores do uso dessas tecnologias em escolas, serviços de saúde e outros espaços públicos.</p>
-      <p>Nesse quadro, o projeto se justifica por oferecer à UEL elementos para uma educação democrática que forme profissionais capazes de compreender e interrogar as condições sociotécnicas de produção de seus discursos, em vez de apenas se adaptarem a ferramentas disponíveis. O Eixo 1 produz um diagnóstico situado que pode subsidiar decisões de departamentos, coordenações de curso e programas de formação docente sobre IA, escrita e avaliação. O Eixo 2 explicita, em profundidade, o que está em jogo na escrita de si com IA na Pedagogia, iluminando processos de subjetivação e autoria em um curso estratégico para a formação de professores. O Eixo 3 traduz esses achados em oficinas, formações e materiais que podem ser apropriados por diferentes cursos, contribuindo para que a IA seja reinscrita em práticas de escrita e autoria que preservem a experiência da palavra como exercício de autonomia, responsabilidade e reflexão crítica, e não como mera delegação heterônoma ao dispositivo algorítmico.</p>
+
+      <p>
+        A relevância do estudo se apoia em três dimensões inter-relacionadas: formativa,
+        teórico-metodológica e sociopolítica/institucional, articuladas em escala institucional
+        (UEL como um todo) e em um recorte intensivo (Pedagogia e escrita de si), com devolutiva
+        extensionista.
+      </p>
+
+      <p>
+        No plano formativo, o projeto parte da distinção deweyana entre experiências educativas
+        e deseducativas. Dewey insiste que nem toda experiência é, por si só, formadora: certas
+        vivências bloqueiam, distorcem ou empobrecem o desenvolvimento ulterior do sujeito. A
+        qualidade formativa de uma experiência depende de dois critérios articulados: continuidade
+        (o modo como cada vivência se encadeia às anteriores e abre possibilidades para experiências
+        futuras) e interação (a relação ativa entre indivíduo e ambiente numa situação concreta
+        de ação). Aplicar esses critérios ao uso de IA em práticas de escrita na graduação implica
+        deslocar o debate de um juízo abstrato sobre a tecnologia para uma análise situada dos
+        modos de uso.
+      </p>
+
+      <p>
+        A justificativa formativa do projeto está em discernir, em escala institucional, em que
+        condições a IA é mobilizada como apoio que reforça autonomia, reflexão e ampliação de
+        repertórios e em que condições tende a produzir experiências deseducativas, marcadas por
+        delegação acrítica, homogeneização discursiva e enfraquecimento do vínculo do estudante
+        com a própria palavra. No Eixo 2, esse julgamento se torna particularmente sensível:
+        quando a IA entra no ateliê da escrita de si, o que está em jogo é a própria experiência
+        de autoformação e autoria de futuros pedagogos.
+      </p>
+
+      <p>
+        No plano teórico-metodológico, o estudo responde a uma lacuna específica do estado da arte.
+        Normas editoriais e diretrizes internacionais recentes – como as posições do Committee on
+        Publication Ethics, da World Association of Medical Editors, das redes SciELO e ASSAf e
+        as orientações da UNESCO para o uso de IA na educação – têm enfatizado transparência,
+        rastreabilidade e responsabilidade humana pela autoria, estabelecendo que modelos
+        algorítmicos não podem ser considerados autores e que os sujeitos humanos permanecem
+        integralmente responsáveis pelo conteúdo.
+      </p>
+
+      <p>
+        Essas normativas, porém, dizem pouco sobre o que efetivamente acontece quando estudantes
+        escrevem com IA em contextos formativos concretos e quase nada sobre como isso repercute
+        na experiência da palavra e na autoria em cursos de graduação brasileiros. A literatura
+        empírica ainda é incipiente tanto em diagnósticos institucionais sobre uso de IA em
+        escrita acadêmica, quanto no exame aprofundado da coescrita em práticas de escrita de si.
+        O projeto se justifica, nesse sentido, por articular um referencial teórico-analítico
+        centrado em John Dewey como fundamento geral (experiência educativa/deseducativa) e,
+        no Eixo 2, em Michel Foucault para a escrita de si (tecnologias de si e subjetivação).
+      </p>
+
+      <p>
+        Metodologicamente, a combinação entre diagnóstico transversal na UEL (Eixo 1), estudo
+        de caso intensivo na Pedagogia (Eixo 2) e ações de extensão/formação (Eixo 3) permite
+        produzir, ao mesmo tempo, um retrato institucional dos usos de IA na escrita e uma análise
+        fina dos processos de coescrita em um contexto específico, oferecendo categorias e critérios
+        analíticos que podem ser apropriados por docentes, cursos e programas de formação docente.
+      </p>
+
+      <p>
+        Por fim, a dimensão sociopolítica e institucional é particularmente relevante no contexto
+        brasileiro e para uma universidade pública como a UEL. A coescrita com IA não ocorre em
+        um vazio social, mas em um cenário atravessado por assimetrias de infraestrutura, dados e
+        poder: plataformas e modelos de linguagem são desenvolvidos e operados por um número
+        restrito de países e corporações, concentrando investimentos, capacidade técnica e definição
+        de agendas de desenvolvimento.
+      </p>
+
+      <p>
+        Muitas línguas, contextos culturais e experiências do Sul Global permanecem sub-representados
+        nos conjuntos de dados que alimentam esses sistemas, o que implica vieses estruturais e riscos
+        de apagamento de vozes e repertórios locais. Ao mesmo tempo, a cultura digital contemporânea
+        é marcada por fluxos comunicacionais acelerados, lógicas de enxame e pressões de transparência
+        e exposição contínuas, que tendem a enquadrar linguagem e experiências como recursos disponíveis
+        a serem otimizados.
+      </p>
+
+      <p>
+        No âmbito da formação superior, essas tensões assumem peso adicional: estudantes e docentes
+        são, simultaneamente, usuários dos sistemas de IA em sua própria escrita e, em muitos cursos,
+        mediadores do uso dessas tecnologias em escolas, serviços de saúde e outros espaços públicos.
+        Nesse quadro, o projeto se justifica por oferecer à UEL elementos para uma educação democrática
+        que forme profissionais capazes de compreender e interrogar as condições sociotécnicas de
+        produção de seus discursos, em vez de apenas se adaptarem a ferramentas disponíveis.
+      </p>
+
+      <p>
+        O Eixo 1 produz um diagnóstico situado que pode subsidiar decisões de departamentos,
+        coordenações de curso e programas de formação docente sobre IA, escrita e avaliação.
+        O Eixo 2 explicita, em profundidade, o que está em jogo na escrita de si com IA na
+        Pedagogia, iluminando processos de subjetivação e autoria em um curso estratégico para
+        a formação de professores. O Eixo 3 traduz esses achados em oficinas, formações e
+        materiais que podem ser apropriados por diferentes cursos, contribuindo para que a IA
+        seja reinscrita em práticas de escrita e autoria que preservem a experiência da palavra
+        como exercício de autonomia, responsabilidade e reflexão crítica, e não como mera
+        delegação heterônoma ao dispositivo algorítmico.
+      </p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="referencial">
-      <h2>Referencial Teórico</h2>
+    <!-- EXPERIÊNCIAS ANÁLOGAS -->
+    <section id="experiencias" class="section">
+      <h2>Experiências análogas e iniciativas correlatas</h2>
+
+      <p>
+        Antes de detalhar o referencial teórico, é importante situar o projeto no conjunto de
+        experiências recentes que vêm articulando inteligência artificial e educação em universidades,
+        redes públicas de ensino e organismos internacionais. Esse panorama reforça a pertinência da
+        proposta na UEL e indica possibilidades concretas de articulação para os três eixos do projeto.
+      </p>
+
+      <p>
+        No campo do ensino superior brasileiro, observa-se, nos últimos anos, a criação de centros
+        e hubs de pesquisa em IA que combinam formação, investigação aplicada e parcerias com governo
+        e setor privado. O Centro de Inteligência Artificial (C4AI), na USP, em parceria com FAPESP
+        e IBM; o Centro de Excelência em Inteligência Artificial (CEIA), em Goiás, com participação
+        da UFG; o Hub de Inovação em Inteligência Artificial (H2IA), na UFPel; e o AI-Lab, na UnB,
+        exemplificam esse movimento de posicionamento das universidades como polos de produção de
+        conhecimento e de soluções em IA, frequentemente ancorado em editais de fomento e em agendas
+        de inovação voltadas a políticas públicas e ao mercado.
+      </p>
+
+      <p>
+        Associado a esse movimento institucional, multiplicam-se cursos de graduação em Ciência de
+        Dados e Inteligência Artificial. A UFPB, a UFG e outras instituições criaram, a partir de 2020,
+        bacharelados que integram fundamentos de computação, estatística e aplicações de IA. No Paraná,
+        a própria UEL implantou, em 2024, o curso de Ciência de Dados e Inteligência Artificial, com
+        ênfase em aplicações em saúde, agronegócio e setor público, reconhecido pela reitoria como
+        iniciativa estratégica e viabilizado por forte mobilização junto à sociedade civil e ao governo
+        estadual.
+      </p>
+
+      <p>
+        A existência desse curso, somada à atuação de grupos de pesquisa e de um Grupo de Trabalho
+        em Inteligência Artificial, Tecnologias Educacionais e Ensino de Línguas, indica que já há
+        massa crítica na UEL e experiências dispersas que o projeto pode articular, especialmente ao
+        conectar formação docente, letramento em IA e práticas de escrita acadêmica.
+      </p>
+
+      <p>
+        No âmbito da educação básica, diversas secretarias estaduais têm lançado programas que dialogam
+        diretamente com os objetivos deste projeto. O caso mais emblemático é o do Piauí, que instituiu
+        a Inteligência Artificial como componente obrigatório em toda a rede estadual, por meio do
+        projeto SeducIA, combinando disciplina específica, formação em larga escala de professores
+        e produção de material didático. Em 2025, centenas de docentes participavam de percursos
+        formativos em IA, em parceria com universidades federais, e foram selecionados multiplicadores
+        regionais para sustentar a política.
+      </p>
+
+      <p>
+        Outros estados avançam por meio de formações continuadas e projetos-piloto. O Ceará, via
+        plataforma FormaCE, passou a ofertar o curso “IA na Escola”, voltado à qualificação de
+        professores para uso pedagógico de IA em planejamento, avaliação e criação de atividades.
+        No Acre, a Secretaria de Educação promoveu oficinas de IA para que docentes experimentassem
+        ferramentas como chatbots, geradores de imagens e plataformas de apoio ao planejamento de
+        aulas, integrando-as a um ecossistema mais amplo de inovação (robótica, realidade virtual,
+        cultura digital). Em São Paulo, a Seduc-SP desenvolveu um piloto em que um sistema de IA
+        auxilia na correção de respostas dissertativas na plataforma TarefaSP, antecipando feedback
+        aos estudantes e reorganizando o tempo de trabalho docente.
+      </p>
+
+      <p>
+        Para o caso da UEL e de sua inserção regional, essas experiências indicam simultaneamente uma
+        demanda crescente por apoio técnico-pedagógico e um campo fértil para atuação articulada entre
+        universidade e redes públicas. No Paraná, o governo estadual anunciou investimentos específicos
+        para que universidades estaduais modernizem laboratórios e práticas formativas com IA e outras
+        tecnologias, sinalizando abertura para projetos que conectem ensino superior, inovação e escolas
+        públicas. O projeto aqui proposto pode contribuir para posicionar a UEL como referência regional
+        em IA na formação superior e na formação de professores, especialmente se as ações de extensão
+        do Eixo 3 forem desenhadas em diálogo com as secretarias estadual e municipais de educação.
+      </p>
+
+      <p>
+        No plano internacional, organismos como a UNESCO têm insistido na necessidade de construir
+        marcos de competências em IA para professores e estudantes e de apoiar sistemas educacionais
+        na elaboração de políticas para uso ético, inclusivo e pedagogicamente significativo da IA.
+        Iniciativas como o <em>AI Competency Framework for Teachers and Students</em> e programas
+        de apoio a escolas na “evolução da IA” colocam a alfabetização em IA (AI literacy) em patamar
+        semelhante ao do letramento digital nas agendas de educação para o século XXI.
+      </p>
+
+      <p>
+        Paralelamente, relatórios sobre a “corrida global” pela introdução da IA na educação mostram
+        que ainda são poucos os países que incorporaram de forma sistemática conteúdos de IA em seus
+        currículos nacionais, o que abre espaço para experiências inovadoras em contextos específicos.
+        Alguns países têm avançado de forma mais agressiva: a Austrália aprovou um framework nacional
+        para uso de IA generativa nas escolas, com implementação progressiva a partir de 2024, e os
+        Emirados Árabes Unidos anunciaram a inclusão de IA como disciplina obrigatória em todas as
+        escolas públicas, do jardim de infância ao ensino médio, articulando formação docente, material
+        didático e atenção a implicações éticas e sociais.
+      </p>
+
+      <p>
+        Tomadas em conjunto, essas experiências análogas sinalizam três elementos centrais para o
+        projeto “Escrita e autoria na formação superior: experiência, técnica e uso de IA na UEL”:
+      </p>
+
+      <ul>
+        <li>
+          trata-se de uma agenda contemporânea, em consolidação, na qual a UEL tem condições de ocupar
+          lugar de destaque regional;
+        </li>
+        <li>
+          há modelos de organização institucional – centros de IA em universidades, programas estaduais
+          de formação de professores, frameworks internacionais – que podem inspirar o desenho dos três
+          eixos, sem serem simplesmente copiados;
+        </li>
+        <li>
+          existe um espaço específico ainda pouco explorado, relativo à experiência da palavra e à
+          autoria na formação superior, em que este projeto pode contribuir de modo original, ao
+          articular diagnóstico institucional, estudo de caso aprofundado na Pedagogia e ações de
+          extensão orientadas por critérios formativos deweyanos e pela problematização foucaultiana
+          da escrita de si.
+        </li>
+      </ul>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
+    </section>
+
+    <!-- REFERENCIAL -->
+    <section id="referencial" class="section">
+      <h2>Referencial teórico</h2>
 
       <h3>a) Inteligência artificial, escrita e autoria na formação superior: estado da arte</h3>
-      <p>A introdução de modelos de inteligência artificial (IA) generativa, como os large language models (LLMs), tem produzido um impacto disruptivo na educação, especialmente nas práticas de escrita. A partir de 2022-2023, ferramentas como o ChatGPT se disseminaram rapidamente, sendo incorporadas ao cotidiano de estudantes e educadores em diferentes países. Relatórios recentes apontam que a IA generativa deixou de ser um recurso experimental para se tornar um componente recorrente de atividades acadêmicas, particularmente em tarefas de leitura, escrita e revisão de textos (STANFORD UNIVERSITY, 2024; MIAO; HOLMES, 2023).</p>
-      <p>Esse aumento do uso de IA na educação vem acompanhado de debates intensos. De um lado, ressalta-se o otimismo quanto às possibilidades formativas. O AI Index 2024 sintetiza evidências de experimentos controlados que apontam ganhos significativos de produtividade e qualidade em tarefas de escrita com apoio de modelos generativos, sobretudo entre autores menos experientes, que tendem a aproximar-se do desempenho de escritores proficientes (STANFORD UNIVERSITY, 2024; NOY; ZHANG, 2023). As ferramentas generativas podem democratizar o acesso a recursos de escrita, oferecendo feedback imediato, sugestões de reformulação e apoio à correção gramatical, ampliando repertórios e favorecendo a autonomia do aprendiz.</p>
-      <p>De outro lado, multiplicam-se preocupações com efeitos colaterais: docentes e instituições relatam riscos de plágio, dependência tecnológica, apagamento da trajetória de escrita e perda de transparência quanto à origem dos textos. Relatos institucionais indicam crescimento expressivo de casos de infração acadêmica associados à IA em universidades, o que tem pressionado a elaboração de normas específicas para o uso desses sistemas em contextos de avaliação (STANFORD UNIVERSITY, 2024; MIAO; HOLMES, 2023). Em resposta, instituições de ensino superior e organismos internacionais passaram a formular diretrizes próprias: a UNESCO publicou, em 2023, uma orientação global sobre IA generativa na educação, defendendo uma abordagem humanista que assegure uso ético, seguro, equitativo e pedagogicamente significativo, com ênfase na proteção de dados, na definição de idades mínimas para interações autônomas e na validação ética dos usos educativos (MIAO; HOLMES, 2023). Em síntese, o estado da arte combina rápida integração da IA às práticas de escrita acadêmica com esforços normativos e regulatórios para enquadrar essa integração de modo responsável.</p>
-      <p>Um aspecto central desse debate é a reconfiguração da autoria e da responsabilidade pelo texto. Ferramentas de IA desafiam noções consolidadas de autoria individual e suscitam a pergunta sobre quem, afinal, está escrevendo. A comunidade científica e editorial tem respondido normativamente a essa questão. Em 2023, o Committee on Publication Ethics (COPE) publicou posição segundo a qual ferramentas de IA não podem ser listadas como autoras de artigos científicos, pois não cumprem critérios mínimos de autoria: contribuição intelectual responsável, possibilidade de responder pelo conteúdo e capacidade de declarar conflitos de interesse (COMMITTEE ON PUBLICATION ETHICS, 2023). Como sistemas algorítmicos, as IAs carecem de qualquer accountability sobre as informações geradas. Organizações como a World Association of Medical Editors e redes editoriais como a JAMA Network convergem no entendimento de que a autoria implica necessariamente um sujeito humano capaz de assumir a palavra e suas consequências (WORLD ASSOCIATION OF MEDICAL EDITORS, 2023; JAMA NETWORK, 2023). Orientações dirigidas a periódicos de acesso aberto, como as diretrizes conjuntas da Academy of Science of South Africa (ASSAf) e da Rede SciELO, reforçam a exigência de transparência quanto ao uso de IA em manuscritos e atribuem integral responsabilidade aos autores humanos por trechos gerados algoritmicamente (ACADEMY OF SCIENCE OF SOUTH AFRICA; SCIELO, 2024).</p>
-      <p>Fora da academia, contudo, começam a emergir práticas que tensionam essa fronteira normativa: reportagens recentes mostram, por exemplo, que plataformas de autopublicação já registram livros que creditam modelos generativos como autores ou coautores, incluindo coletâneas de textos produzidos integralmente por sistemas de IA (NOLAN, 2023). Do ponto de vista cultural, a figura do “coautor algorítmico” já se insinua, ainda que institucionalmente contestada.</p>
-      <p>Esses desenvolvimentos inscrevem-se em condicionantes sociotécnicos mais amplos. A disponibilidade de IAs avançadas para escrita depende de infraestruturas de computação e de dados altamente concentradas em poucos países e corporações. O AI Index 2024 estima que a maior parte do investimento privado e da capacidade técnica em IA esteja concentrada nos Estados Unidos, na China e em alguns outros países de alta renda, o que impacta diretamente quem define agendas de pesquisa, prioridades de desenvolvimento e modelos de negócio (STANFORD UNIVERSITY, 2024). No âmbito da UNESCO, tem-se enfatizado que a inovação e as infraestruturas de IA permanecem fortemente concentradas, o que ameaça a diversidade cultural e linguística representada nessas tecnologias (RAMOS, 2023; UNITED NATIONS EDUCATIONAL, SCIENTIFIC AND CULTURAL ORGANIZATION, 2021). Essa assimetria implica que grande parte dos idiomas, contextos culturais e perspectivas do Sul Global permanece sub-representada nos conjuntos de dados que alimentam os modelos de linguagem de grande porte, de modo que as respostas tendem a reproduzir vieses estruturais, privilegiando línguas e visões hegemônicas e silenciando experiências minoritárias. A própria UNESCO adverte que, sem contextualização local e regulação adequada, a IA corre o risco de ampliar desigualdades educacionais já existentes e reforçar padrões culturais excludentes (UNESCO, 2021; MIAO; HOLMES, 2023).</p>
-      <p>Esse pano de fundo geopolítico-tecnológico adiciona uma camada de complexidade à análise do uso de IA na escrita na educação superior: qualquer avaliação formativa precisa reconhecer que a ferramenta não é neutra, mas produto de um enquadramento técnico, econômico e político específico. Em síntese, o cenário atual articula potencialidades inegáveis – aumento de produtividade, apoio à escrita, personalização de processos educativos – com desafios éticos e políticos decisivos: garantir autenticidade e responsabilidade na autoria, proteger sujeitos e dados e integrar a IA à educação de modo crítico, inclusivo e emancipador, evitando uma adesão acrítica a dispositivos algorítmicos disponíveis.</p>
+
+      <p>
+        A introdução de modelos de inteligência artificial generativa, como os <em>large language
+        models</em> (LLMs), tem produzido um impacto disruptivo na educação, especialmente nas práticas
+        de escrita. A partir de 2022–2023, ferramentas como o ChatGPT se disseminaram rapidamente,
+        sendo incorporadas ao cotidiano de estudantes e educadores em diferentes países. Relatórios
+        recentes apontam que a IA generativa deixou de ser um recurso experimental para se tornar
+        componente recorrente de atividades acadêmicas, particularmente em tarefas de leitura, escrita
+        e revisão de textos.
+      </p>
+
+      <p>
+        O <em>AI Index 2024</em> sintetiza evidências de experimentos controlados que apontam ganhos
+        significativos de produtividade e qualidade em tarefas de escrita com apoio de modelos
+        generativos, sobretudo entre autores menos experientes, que tendem a aproximar-se do desempenho
+        de escritores proficientes. As ferramentas generativas podem democratizar o acesso a recursos
+        de escrita, oferecendo feedback imediato, sugestões de reformulação e apoio à correção
+        gramatical, ampliando repertórios e favorecendo a autonomia do aprendiz.
+      </p>
+
+      <p>
+        De outro lado, multiplicam-se preocupações com efeitos colaterais: docentes e instituições
+        relatam riscos de plágio, dependência tecnológica, apagamento da trajetória de escrita e perda
+        de transparência quanto à origem dos textos. Relatos institucionais indicam crescimento
+        expressivo de casos de infração acadêmica associados à IA em universidades, o que tem
+        pressionado a elaboração de normas específicas para o uso desses sistemas em contextos de
+        avaliação.
+      </p>
+
+      <p>
+        Em resposta, instituições de ensino superior e organismos internacionais passaram a formular
+        diretrizes próprias. A UNESCO publicou, em 2023, orientação global sobre IA generativa na
+        educação, defendendo abordagem humanista que assegure uso ético, seguro, equitativo e
+        pedagogicamente significativo, com ênfase na proteção de dados, na definição de idades mínimas
+        para interações autônomas e na validação ética dos usos educativos. Em síntese, o estado da
+        arte combina rápida integração da IA às práticas de escrita acadêmica com esforços normativos
+        e regulatórios para enquadrar essa integração de modo responsável.
+      </p>
+
+      <p>
+        Um aspecto central desse debate é a reconfiguração da autoria e da responsabilidade pelo texto.
+        Ferramentas de IA desafiam noções consolidadas de autoria individual e suscitam a pergunta
+        sobre quem, afinal, está escrevendo. A comunidade científica e editorial tem respondido
+        normativamente a essa questão, afirmando que ferramentas de IA não podem ser listadas como
+        autoras de artigos científicos e que a responsabilidade integral pelo conteúdo permanece com
+        sujeitos humanos. Orientações dirigidas a periódicos reforçam a exigência de transparência
+        quanto ao uso de IA em manuscritos, atribuindo responsabilidade total aos autores humanos por
+        trechos gerados algoritmicamente.
+      </p>
+
+      <p>
+        Esses desenvolvimentos inscrevem-se em condicionantes sociotécnicos mais amplos. A
+        disponibilidade de IAs avançadas para escrita depende de infraestruturas de computação e de
+        dados altamente concentradas em poucos países e corporações. Relatórios internacionais
+        estimam que a maior parte do investimento privado e da capacidade técnica em IA esteja
+        concentrada em países de alta renda, o que impacta diretamente quem define agendas de
+        pesquisa, prioridades de desenvolvimento e modelos de negócio.
+      </p>
+
+      <p>
+        A UNESCO tem enfatizado que a inovação e as infraestruturas de IA permanecem fortemente
+        concentradas, o que ameaça a diversidade cultural e linguística representada nessas
+        tecnologias. Essa assimetria implica sub-representação de grande parte dos idiomas e
+        contextos culturais do Sul Global nos conjuntos de dados que alimentam os modelos de
+        linguagem, de modo que as respostas tendem a reproduzir vieses estruturais, privilegiando
+        línguas e visões hegemônicas e silenciando experiências minoritárias.
+      </p>
+
+      <p>
+        Esse pano de fundo geopolítico-tecnológico adiciona camada de complexidade à análise do uso
+        de IA na escrita na educação superior: qualquer avaliação formativa precisa reconhecer que a
+        ferramenta não é neutra, mas produto de enquadramento técnico, econômico e político
+        específico. Em síntese, o cenário atual articula potencialidades inegáveis – aumento de
+        produtividade, apoio à escrita, personalização de processos educativos – com desafios éticos
+        e políticos decisivos: garantir autenticidade e responsabilidade na autoria, proteger sujeitos
+        e dados e integrar a IA à educação de modo crítico, inclusivo e emancipador.
+      </p>
 
       <h3>b) Experiência educativa em John Dewey: critérios para analisar usos de IA na UEL</h3>
-      <p>Diante desse estado da arte, o projeto adota como fundamento geral a noção de experiência em John Dewey para julgar a qualidade formativa das situações em que estudantes recorrem à IA em práticas de escrita na formação superior. Dewey concebe a experiência como núcleo do processo educacional, atribuindo-lhe valor instrumental e intrínseco. Em Experience and Education, adverte que nem toda experiência promove educação: há experiências que distorcem, interrompem ou empobrecem o desenvolvimento do sujeito, às quais chama de deseducativas (DEWEY, 1938). Para distinguir experiências educativas das deseducativas, propõe dois critérios interdependentes: continuidade e interação.</p>
-      <p>O princípio da continuidade refere-se à forma como cada experiência se conecta às anteriores e influencia as subsequentes, compondo uma linha de crescimento. Uma experiência educativa é aquela que enriquece o que o indivíduo já viveu e expande as possibilidades de experiências futuras; uma experiência deseducativa rompe essa continuidade, gerando estagnação ou retrocesso. Já o critério da interação diz respeito à relação ativa entre o sujeito e o ambiente numa situação concreta: experiências educativas envolvem engajamento efetivo e adaptação mútua entre indivíduo e meio, enquanto experiências deseducativas se caracterizam por passividade ou por um ambiente que, em vez de desafiar e estimular, reduz o sujeito à heteronomia (DEWEY, 1938).</p>
-      <p>Aplicar esse quadro conceitual ao uso de IA em práticas de escrita na graduação significa evitar julgamentos tecnológicos apriorísticos – não se trata de rotular a IA como “boa” ou “má” em si – e examinar empiricamente como e em que condições a interação entre estudantes e algoritmos contribui, ou não, para o crescimento formativo. Em termos de continuidade, interessa indagar se o uso de IA em tarefas como resenhas, relatórios, trabalhos de conclusão de curso, planos de aula ou textos reflexivos se apoia em experiências prévias de escrita e as potencializa, ou se, ao contrário, instaura uma ruptura com o repertório e a trajetória de aprendizagem do estudante. Indicadores concretos podem ser buscados nos textos e depoimentos: referências explícitas a vivências acadêmicas ou profissionais anteriores integradas na escrita; menção a aprendizagens pregressas reelaboradas com auxílio da IA; comparações que os próprios estudantes estabelecem entre seu modo de escrever antes e depois da ferramenta. Quando a IA é mobilizada para aprofundar a reflexão, organizar melhor argumentos ou explicitar critérios, há sinais de continuidade fortalecida; quando substitui integralmente o esforço de elaboração, produzindo textos genéricos e desconectados da trajetória do sujeito, há indícios de ruptura deseducativa.</p>
-      <p>No que concerne à interação, importa analisar a qualidade do diálogo entre quem escreve e a IA. Situações mais próximas do polo educativo supõem que os estudantes negociem ativamente com as sugestões algorítmicas, mantendo-se agentes das decisões de escrita: pedem reformulações, avaliam criticamente as respostas, ajustam trechos, recusam formulações inadequadas, combinam saídas da IA com referências bibliográficas e experiências próprias. Esse uso negociado, em que o feedback algorítmico é incorporado com discernimento, tende a ampliar a interação do sujeito com o meio digital, pois envolve engajamento reflexivo com o conteúdo gerado. Em contraste, usos delegatórios – “deixei a IA escrever por mim”, “copiei o texto sugerido sem modificar” –, bem como trabalhos excessivamente genéricos, nos quais se apaga o estilo pessoal e a vinculação à experiência concreta da formação, indicam interação empobrecida ou heterônoma. Nesses casos, o ambiente digital deixa de ser interlocutor desafiante para tornar-se substituto da agência do escritor, bloqueando, na perspectiva de Dewey, a função educativa da experiência.</p>
-      <p>Dewey enfatiza ainda que a educação é processo social e interativo: mesmo textos aparentemente individuais – como diários, portfólios, relatórios de estágio ou TCCs – não são atos isolados, pois inserem o sujeito numa trama de linguagem e endereçamento; quem escreve dialoga com referências culturais, com leituras acadêmicas, com pares e docentes, e consigo mesmo enquanto outro (DEWEY, 1938; GILES; EYLER, 1994). Sob essa luz, o uso de IA em práticas de escrita na graduação pode ser interpretado como forma singular de interação social no processo formativo: o algoritmo atua como um “outro generalizado” – impessoal e estatístico – com o qual o estudante dialoga durante a escritura. A pergunta de Dewey – essa experiência enriquece (educa) ou empobrece (deseduca)? – desdobra-se, aqui, na avaliação de diferentes configurações de uso da IA. Hipotetiza-se que usos ativos e críticos (consultivos, reflexivos, subordinando a ferramenta à intenção autoral) aproximam-se do polo educativo, enquanto usos delegatórios e passivos (em que a IA domina o processo e dita o conteúdo final) aproximam-se do polo deseducativo.</p>
-      <p>Em suma, Dewey oferece um critério normativo-operativo para julgar a qualidade formativa das situações de escrita mediadas por IA: continuidades reforçadas, interações ricas e crescimento de repertório indicam experiências educativas; rupturas na trajetória de aprendizagem, interações acríticas e enfraquecimento da agência sinalizam possíveis experiências deseducativas. Esse julgamento não será aplicado de forma dogmática ou binária, mas como instrumento analítico flexível: reconhece-se que uma mesma atividade de escrita pode conter elementos educativos e deseducativos imbricados. As categorias de Dewey funcionarão como fundamento comum aos três eixos do projeto: orientam o diagnóstico transversal na UEL (Eixo 1), estruturam a leitura aprofundada das experiências de escrita de si na Pedagogia (Eixo 2) e informam as propostas de formação e extensão voltadas a usos mais críticos e emancipadores da IA na escrita acadêmica (Eixo 3).</p>
+
+      <p>
+        Diante desse estado da arte, o projeto adota como fundamento geral a noção de experiência em
+        John Dewey para julgar a qualidade formativa das situações em que estudantes recorrem à IA em
+        práticas de escrita na formação superior. Dewey concebe a experiência como núcleo do processo
+        educacional, atribuindo-lhe valor instrumental e intrínseco. Em <em>Experience and Education</em>,
+        adverte que nem toda experiência promove educação: há experiências que distorcem, interrompem
+        ou empobrecem o desenvolvimento do sujeito, às quais chama de deseducativas. Para distingui-las,
+        propõe dois critérios interdependentes: continuidade e interação.
+      </p>
+
+      <p>
+        O princípio da continuidade refere-se à forma como cada experiência se conecta às anteriores
+        e influencia as subsequentes, compondo uma linha de crescimento. Uma experiência educativa
+        enriquece o que o indivíduo já viveu e expande as possibilidades de experiências futuras; uma
+        experiência deseducativa rompe essa continuidade, gerando estagnação ou retrocesso. Já o
+        critério da interação diz respeito à relação ativa entre o sujeito e o ambiente numa situação
+        concreta: experiências educativas envolvem engajamento efetivo e adaptação mútua entre
+        indivíduo e meio; experiências deseducativas caracterizam-se por passividade ou por ambiente
+        que reduz o sujeito à heteronomia.
+      </p>
+
+      <p>
+        Aplicar esse quadro conceitual ao uso de IA em práticas de escrita na graduação significa
+        evitar julgamentos tecnológicos apriorísticos e examinar empiricamente como e em que condições
+        a interação entre estudantes e algoritmos contribui, ou não, para o crescimento formativo.
+        Em termos de continuidade, interessa indagar se o uso de IA em tarefas como resenhas, relatórios,
+        TCCs, planos de aula ou textos reflexivos se apoia em experiências prévias de escrita e as
+        potencializa, ou se instaura ruptura com o repertório e a trajetória de aprendizagem do
+        estudante.
+      </p>
+
+      <p>
+        No que concerne à interação, importa analisar a qualidade do diálogo entre quem escreve e a IA.
+        Situações mais próximas do polo educativo supõem que os estudantes negociem ativamente com as
+        sugestões algorítmicas, mantendo-se agentes das decisões de escrita: pedem reformulações,
+        avaliam criticamente as respostas, ajustam trechos, recusam formulações inadequadas, combinam
+        saídas da IA com referências bibliográficas e experiências próprias. Em contraste, usos
+        delegatórios – “deixei a IA escrever por mim” – e textos excessivamente genéricos, nos quais
+        se apaga o estilo pessoal e a vinculação à experiência concreta, indicam interação empobrecida
+        ou heterônoma.
+      </p>
+
+      <p>
+        Dewey enfatiza ainda que a educação é processo social e interativo: mesmo textos aparentemente
+        individuais – como diários, portfólios, relatórios de estágio ou TCCs – não são atos isolados,
+        pois inserem o sujeito numa trama de linguagem e endereçamento. Sob essa luz, o uso de IA em
+        práticas de escrita na graduação pode ser interpretado como forma singular de interação social
+        no processo formativo: o algoritmo atua como um “outro generalizado” – impessoal e estatístico –
+        com o qual o estudante dialoga durante a escritura. As categorias de Dewey funcionarão como
+        fundamento comum aos três eixos do projeto.
+      </p>
 
       <h3>c) Escrita de si como tecnologia de si na Pedagogia: fundamento do Eixo 2</h3>
-      <p>No Eixo 2, a análise das práticas de escrita de si na Pedagogia é orientada pelo horizonte foucaultiano das tecnologias de si. Em seus estudos sobre a ética dos antigos, Michel Foucault define tecnologias de si como práticas pelas quais os indivíduos, “por conta própria ou com ajuda de outrem, efetuam um certo número de operações sobre seus corpos e suas almas, seus pensamentos, suas condutas, seu modo de ser” com vistas a transformar-se e atingir determinados estados de perfeição, sabedoria ou autonomia (FOUCAULT, 1988, p. 18). Entre essas práticas, a escrita – cartas pessoais, diários, cadernos de notas (hupomnemata) – ocupa lugar central como exercício espiritual e ético.</p>
-      <p>No ensaio “A escrita de si”, Foucault (1983; 2004) argumenta que escrever sobre si não é um gesto narcisista trivial, mas uma askesis que articula memória, reflexão e constituição de uma identidade ética. Ao escrever, o sujeito relembra acontecimentos, registra pensamentos considerados verdadeiros e, ao relê-los ou compartilhá-los com interlocutores reais ou imaginários, incorpora esses discursos como princípios de conduta. A escrita de si exerce, assim, função etopoiética: contribui para formar o ethos do sujeito. Diários, cartas e textos autobiográficos funcionam como espelho e laboratório do eu – espaços em que a pessoa se observa, se experimenta e se transforma.</p>
-      <p>Quando se introduz a inteligência artificial nesse dispositivo, reconfigura-se a tecnologia de si tradicional da escrita. Onde antes havia um diálogo do sujeito consigo mesmo (e eventualmente com um mestre, amigo ou autor inspirador), passa a existir também um “companheiro algorítmico” no ateliê da subjetividade. Esse companheiro – a IA – propõe formulações, completa frases, sugere referências, reorganiza argumentos, a partir de padrões extraídos de vastos repositórios textuais. Essa intervenção incide diretamente sobre o modo como o estudante se relaciona com o próprio dizer, podendo tensionar a escrita de si em duas direções contrastantes.</p>
-      <p>Por um lado, a IA pode operar como espelho crítico que incita o autor a clarificar melhor o que quer dizer. Se um estudante pede ao sistema que reformule um trecho e a sugestão resultante não condiz com sua intenção, a dissonância pode obrigá-lo a explicitar seus critérios, recusar o que não o representa e reafirmar sua voz. Nesse sentido, a coescrita com IA pode intensificar o exame de si: as saídas algorítmicas funcionam como pano de fundo sobre o qual o sujeito projeta, por contraste, aquilo que de fato deseja afirmar, refinando sua autoria. Empiricamente, esse movimento se manifesta em relatos como “a IA sugeriu X, mas não soava como eu, então reescrevi do meu jeito”, ou em textos em que versões inicialmente genéricas fornecidas pela IA são trabalhadas até refletirem experiências pessoais singulares. Nesses casos, a IA é mobilizada como um “hetero-espelho” que reforça a tecnologia de si, alimentando reflexão e autoconsciência.</p>
-      <p>Por outro lado, há o risco de a IA converter-se em espécie de prótese de sujeito, conduzindo ao que aqui denominamos heterotecnologia de si. Isso ocorre quando o escritor passa a atribuir à máquina a autoridade sobre o que é dito, tomando a voz algorítmica como superior à sua. Em vez de exercício de autonomia, a escrita torna-se adesão a enunciados produzidos por outrem – no caso, pelo modelo de linguagem. Indicadores dessa configuração incluem falas como “o texto ficou bom porque a IA escreve melhor do que eu”, “confiei no que o sistema propôs, ele sabe formular melhor”, ou a produção de textos pasteurizados, sem traços distintivos, que qualquer um poderia ter assinado. Do ponto de vista foucaultiano, isso sugere que a prática deixa de operar como tecnologia de si – pela qual o sujeito se constitui – para funcionar como dispositivo em que o eu é majoritariamente falado pelo Outro (a máquina), com diluição da responsabilidade e do ato de verdade consigo mesmo.</p>
-      <p>A tarefa analítica, no Eixo 2, consiste em avaliar em que medida as instâncias de escrita de si mediadas por IA se aproximam de uma tecnologia de si que fortalece o autogoverno ou, inversamente, de uma heterotecnologia de si que acentua a heteronomia. Esse referencial será aplicado de forma crítica e não esquemática: não se presume um divisor fixo entre “uso bom” e “uso ruim”. Um mesmo estudante pode, em determinados momentos, delegar em excesso à IA e, em outros, retomar parte de sua voz; o processo é necessariamente dinâmico. O conceito de heterotecnologia de si é empregado aqui como categoria heurística, não como rótulo moral, para nomear o deslocamento do centro de gravidade da autoria em direção ao dispositivo técnico.</p>
-      <p>O ideal foucaultiano da escrita de si orienta, assim, o olhar para sinais de cuidado de si e de responsabilidade no ato de escrever: interessa perceber se, ao escrever com IA, o estudante exerce vigilância crítica sobre o que é produzido, mantém consciência de si enquanto autor e se reconhece responsável pelo texto final, ou se há esmaecimento dessa postura ética. Em última instância, trata-se de interrogar que modos de subjetivação são engendrados quando a IA entra no ateliê da escrita de si: se a coescrita contribui para formar sujeitos mais atentos a si, capazes de conduzir a própria palavra, ou se alimenta formas sutis de tutela, acomodação e renúncia à autoria. É nessa chave foucaultiana que o Eixo 2 lerá diários, narrativas e textos reflexivos produzidos na Pedagogia, buscando descrever, com precisão, as reconfigurações da experiência de si e da autoria na presença do “companheiro algorítmico”.</p>
+
+      <p>
+        No Eixo 2, a análise das práticas de escrita de si na Pedagogia é orientada pelo horizonte
+        foucaultiano das tecnologias de si. Em seus estudos sobre a ética dos antigos, Michel Foucault
+        define tecnologias de si como práticas pelas quais os indivíduos, por conta própria ou com
+        ajuda de outrem, efetuam um conjunto de operações sobre seus corpos e suas almas, seus
+        pensamentos, suas condutas, com vistas a transformar-se e atingir determinados estados de
+        perfeição, sabedoria ou autonomia. Entre essas práticas, a escrita – cartas pessoais, diários,
+        cadernos de notas – ocupa lugar central como exercício espiritual e ético.
+      </p>
+
+      <p>
+        No ensaio “A escrita de si”, Foucault argumenta que escrever sobre si não é gesto narcisista
+        trivial, mas <em>askesis</em> que articula memória, reflexão e constituição de identidade ética.
+        Ao escrever, o sujeito relembra acontecimentos, registra pensamentos considerados verdadeiros e,
+        ao relê-los ou compartilhá-los, incorpora esses discursos como princípios de conduta. A escrita
+        de si exerce, assim, função etopoiética: contribui para formar o <em>ethos</em> do sujeito.
+      </p>
+
+      <p>
+        Quando se introduz a inteligência artificial nesse dispositivo, reconfigura-se a tecnologia de
+        si tradicional da escrita. Onde antes havia diálogo do sujeito consigo mesmo (e eventualmente
+        com um mestre, amigo ou autor inspirador), passa a existir também um “companheiro algorítmico”
+        no ateliê da subjetividade. Esse companheiro propõe formulações, completa frases, sugere
+        referências, reorganiza argumentos a partir de padrões extraídos de vastos repositórios
+        textuais.
+      </p>
+
+      <p>
+        Por um lado, a IA pode operar como espelho crítico que incita o autor a clarificar melhor
+        o que quer dizer. Se um estudante pede ao sistema que reformule um trecho e a sugestão
+        não condiz com sua intenção, a dissonância pode obrigá-lo a explicitar seus critérios,
+        recusar o que não o representa e reafirmar sua voz. Nesse sentido, a coescrita com IA pode
+        intensificar o exame de si, fortalecendo a tecnologia de si.
+      </p>
+
+      <p>
+        Por outro lado, há o risco de a IA converter-se em prótese de sujeito, conduzindo ao que aqui
+        denominamos heterotecnologia de si. Isso ocorre quando o escritor passa a atribuir à máquina
+        autoridade sobre o que é dito, tomando a voz algorítmica como superior à sua. Em vez de
+        exercício de autonomia, a escrita torna-se adesão a enunciados produzidos por outrem – no caso,
+        pelo modelo de linguagem. O conceito de heterotecnologia de si é empregado como categoria
+        heurística para nomear o deslocamento do centro de gravidade da autoria em direção ao
+        dispositivo técnico.
+      </p>
+
+      <p>
+        O ideal foucaultiano da escrita de si orienta, assim, o olhar para sinais de cuidado de si
+        e responsabilidade no ato de escrever: interessa perceber se, ao escrever com IA, o estudante
+        exerce vigilância crítica sobre o que é produzido, mantém consciência de si enquanto autor
+        e se reconhece responsável pelo texto final, ou se há esmaecimento dessa postura ética.
+      </p>
 
       <h3>d) Cultura digital, visibilidade e enquadramento técnico da escrita com IA</h3>
-      <p>Embora a distinção deweyana entre experiências educativas e deseducativas forneça o eixo normativo central deste estudo, é preciso reconhecer que tais experiências se produzem hoje em uma ambiência sociotécnica específica, marcada pela cultura digital, pela pressão por visibilidade e por formas contemporâneas de organização técnica da linguagem.</p>
-      <p>Byung-Chul Han identifica, naquilo que chama de “sociedade da transparência”, um regime em que se intensifica a exigência de exposição total: ações, afetos e opiniões são continuamente convocados a tornarem-se visíveis, compartilháveis e mensuráveis (HAN, 2017). Essa lógica reduz zonas de opacidade e recolhimento que protegiam a intimidade e o dissenso, convertendo práticas antes discretas – como anotações pessoais, diários de estudo ou preparações de aula – em conteúdos permanentemente suscetíveis de circulação, avaliação e metrificação em plataformas digitais, inclusive educacionais. No âmbito da formação superior, isso implica que boa parte da escrita de estudantes e docentes tende a ser capturada por ambientes virtuais de aprendizagem, sistemas de avaliação e métricas de engajamento, deslocando o foco da experiência interna de escrever para a visibilidade e para o desempenho.</p>
-      <p>Em obra posterior, Han descreve a comunicação digital como um “enxame” de reações instantâneas, marcadas pela efemeridade e pela ausência de orientação duradoura (HAN, 2018). Em contraste com formas mais lentas e estáveis de escrita – como a carta ou o diário –, as interações mediadas por plataformas favorecem respostas rápidas, fórmulas recorrentes e padronização afetiva. A integração de modelos de inteligência artificial generativa a esse cenário reforça essa tendência: sistemas treinados em grandes bases de dados textuais tendem a produzir respostas estatisticamente prováveis, alinhadas a estilos médios e facilmente consumíveis, o que pode intensificar a homogeneização dos textos e a expectativa de soluções imediatas para tarefas de escrita.</p>
-      <p>Martin Heidegger, por sua vez, ajuda a iluminar a dimensão propriamente técnica dessa configuração ao descrever a tecnologia moderna como um modo de revelar o real em que tudo se apresenta como recurso disponível (Bestand) para uso e otimização (HEIDEGGER, 2001). No conceito de Ge-stell (enquadramento), a técnica não é apenas um conjunto de instrumentos, mas um modo de dispor natureza, coisas e pessoas como estoque explorável. Quando a linguagem é capturada por esse regime, ela deixa de ser apenas espaço de sentido e criação para tornar-se material recombinável, mobilizado como meio para fins funcionais.</p>
-      <p>No caso de modelos de linguagem, a palavra do estudante corre o risco de ser tratada como elemento descartável de um processo de recombinação: textos são decompostos, reorganizados e “melhorados” a partir de padrões médios, e o próprio sujeito pode passar a se perceber menos como autor comprometido com o que escreve e mais como operador de ferramenta. A questão heideggeriana sobre se é possível manter uma relação “livre” com a técnica – isto é, reconhecer seu poder de enquadramento sem se deixar dominar cegamente por ele (HEIDEGGER, 2001) – ganha, aqui, uma dimensão pedagógica: como formar estudantes e docentes capazes de compreender a IA como artefato histórico, econômico e político, e não como caixa-preta mágica?</p>
-      <p>Esse horizonte cultural e técnico é particularmente relevante para o Eixo 3 do projeto, dedicado à extensão e à formação na UEL. As ações previstas – oficinas, formações para docentes e coordenações, produção de materiais – serão pensadas como estratégias de alfabetização crítica frente à IA e à cultura digital: espaços de suspensão parcial da aceleração, de explicitação dos modos de funcionamento dos modelos e de reflexão sobre o que se ganha e o que se perde ao delegar partes do trabalho de escrever aos sistemas algorítmicos. A partir desse quadro, o Eixo 3 procura criar condições institucionais para que estudantes e docentes retomem a palavra como experiência formativa, mesmo em meio a dispositivos que tendem a reduzi-la a conteúdo performático e recurso utilitário.</p>
 
-      <h3>e) Critérios formativos para usos críticos de IA na escrita e na formação na UEL</h3>
-      <p>A partir de John Dewey, o projeto assume que a simples exposição a experiências envolvendo IA não garante formação: há experiências que educam e há experiências que deseducam (DEWEY, 1938). A distinção entre uma e outra depende, para o autor, da articulação entre dois critérios – continuidade e interação – que aqui funcionam como norte para os três eixos da pesquisa.</p>
-      <p>O critério da continuidade diz respeito ao modo como cada experiência se encadeia às anteriores e abre possibilidades para experiências futuras. Uma experiência educativa é aquela que enriquece o repertório do sujeito e amplia sua capacidade de enfrentar situações subsequentes; uma experiência deseducativa, ao contrário, tende a produzir estagnação, retrocesso ou ruptura na linha de crescimento (DEWEY, 1938). No contexto da UEL, isso implica perguntar se determinados usos de IA na escrita – em relatórios, TCCs, planos de aula, códigos, ensaios – ajudam estudantes a aprofundar competências de leitura, argumentação e autoria, ou se, ao contrário, instauram formas de dependência que empobrecem sua trajetória de aprendizagem.</p>
-      <p>O critério da interação remete à qualidade da relação entre indivíduo e ambiente em situações concretas. Experiências educativas supõem engajamento ativo, em que o sujeito responde, questiona, experimenta e adapta o meio às suas finalidades; experiências deseducativas se caracterizam por passividade, submissão acrítica ou adaptação puramente heterônoma às exigências externas (DEWEY, 1938). Transposto para o uso de IA, isso significa examinar se estudantes e docentes negociam criticamente com as sugestões algorítmicas – aceitando, recusando ou reelaborando saídas – ou se simplesmente se deixam conduzir pela ferramenta, aceitando resultados prontos sem interrogação.</p>
-      <p>Esses critérios deweyanos orientam, de modo integrado, os três eixos da pesquisa:</p>
-      <ul>
-        <li><strong>No Eixo 1,</strong> servem para qualificar o diagnóstico institucional: ao mapear usos de IA em diferentes cursos, o interesse não é apenas saber “quanto” se utiliza IA, mas “como” essas experiências se distribuem ao longo da formação e em que medida favorecem continuidade e interação, ou produzem delegação acrítica e homogeneização.</li>
-        <li><strong>No Eixo 2,</strong> centrado na escrita de si na Pedagogia, os mesmos critérios permitem avaliar com maior fineza como a coescrita com IA incide sobre trajetórias de escrita e sobre a relação dos futuros pedagogos com a própria palavra, articulando experiência formativa e autoria.</li>
-        <li><strong>No Eixo 3,</strong> eles funcionam como bússola para o desenho de oficinas, formações e materiais: as ações extensionistas buscarão criar experiências de escrita com IA que ativem processos de reflexão, reescrita e explicitação de critérios, evitando propostas que reforcem o uso da ferramenta apenas como atalho produtivista.</li>
-      </ul>
-      <p>O diálogo com Han (2017; 2018) e Heidegger (2001) reforça essa leitura ao lembrar que as experiências educativas ou deseducativas com IA não ocorrem em um vácuo, mas em um contexto de transparência compulsória, aceleração comunicacional e enquadramento técnico da linguagem. Em uma cultura que tende a transformar toda produção textual em conteúdo visível e imediatamente avaliável, e em um regime técnico que trata a palavra como recurso recombinável, é ainda mais importante que a universidade organize situações em que estudantes possam experimentar outra relação com o tempo, com o erro e com a elaboração escrita.</p>
-      <p>Do ponto de vista formativo, o Eixo 3 é pensado como espaço privilegiado para essa “contratécnica”: ações que introduzam pausas, demoras, reescritas e discussões abertas sobre o uso de IA; que deem lugar à explicitação de critérios pelos próprios estudantes e docentes; e que incentivem uma postura vigilante e responsável frente aos textos produzidos com apoio algorítmico. O objetivo não é negar a técnica, mas reinscrevê-la em experiências educativas que fortaleçam a agência dos sujeitos. Em termos de Dewey, trata-se de organizar condições para que os encontros entre estudantes, docentes e IA funcionem como experiências que ampliem a linha de crescimento – e não como episódios que, sob promessa de eficiência, acabem por empobrecer a relação com a palavra e com o próprio aprender.</p>
+      <p>
+        Embora a distinção deweyana entre experiências educativas e deseducativas forneça o eixo
+        normativo central deste estudo, é preciso reconhecer que tais experiências se produzem hoje
+        em ambiência sociotécnica específica, marcada pela cultura digital, pela pressão por
+        visibilidade e por formas contemporâneas de organização técnica da linguagem.
+      </p>
+
+      <p>
+        Byung-Chul Han identifica, na “sociedade da transparência”, regime em que se intensifica a
+        exigência de exposição total: ações, afetos e opiniões são continuamente convocados a tornarem-se
+        visíveis, compartilháveis e mensuráveis. Essa lógica reduz zonas de opacidade e recolhimento
+        que protegiam a intimidade e o dissenso, convertendo práticas antes discretas – como anotações
+        pessoais, diários de estudo ou preparações de aula – em conteúdos permanentemente suscetíveis
+        de circulação e avaliação em plataformas digitais.
+      </p>
+
+      <p>
+        Em obra posterior, Han descreve a comunicação digital como “enxame” de reações instantâneas,
+        marcadas pela efemeridade e pela ausência de orientação duradoura. A integração de modelos
+        de IA generativa a esse cenário reforça essa tendência: sistemas treinados em grandes bases
+        textuais tendem a produzir respostas estatisticamente prováveis, alinhadas a estilos médios
+        e facilmente consumíveis, o que pode intensificar homogeneização dos textos e expectativa de
+        soluções imediatas para tarefas de escrita.
+      </p>
+
+      <p>
+        Martin Heidegger, por sua vez, ajuda a iluminar a dimensão técnica dessa configuração ao
+        descrever a tecnologia moderna como modo de revelar o real em que tudo se apresenta como
+        recurso disponível (<em>Bestand</em>) para uso e otimização. No conceito de <em>Ge-stell</em>
+        (enquadramento), a técnica não é apenas conjunto de instrumentos, mas modo de dispor natureza,
+        coisas e pessoas como estoque explorável. Quando a linguagem é capturada por esse regime,
+        ela deixa de ser espaço de sentido e criação para tornar-se material recombinável, mobilizado
+        como meio para fins funcionais.
+      </p>
+
+      <p>
+        No caso de modelos de linguagem, a palavra do estudante corre risco de ser tratada como
+        elemento descartável de processo de recombinação: textos são decompostos, reorganizados e
+        “melhorados” a partir de padrões médios, e o próprio sujeito pode passar a se perceber menos
+        como autor comprometido com o que escreve e mais como operador de ferramenta.
+      </p>
+
+      <p>
+        A questão heideggeriana sobre possibilidade de manter relação “livre” com a técnica – isto é,
+        reconhecer seu poder de enquadramento sem se deixar dominar cegamente por ele – ganha aqui
+        dimensão pedagógica: como formar estudantes e docentes capazes de compreender a IA como
+        artefato histórico, econômico e político, e não como caixa-preta mágica?
+      </p>
+
+      <p>
+        Esse horizonte cultural e técnico é particularmente relevante para o Eixo 3 do projeto,
+        dedicado à extensão e à formação na UEL. As ações previstas – oficinas, formações e produção
+        de materiais – serão pensadas como estratégias de alfabetização crítica frente à IA e à cultura
+        digital: espaços de suspensão parcial da aceleração, de explicitação dos modos de funcionamento
+        dos modelos e de reflexão sobre o que se ganha e o que se perde ao delegar partes do trabalho
+        de escrever aos sistemas algorítmicos.
+      </p>
+
+     
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="objetivos">
+    <!-- OBJETIVOS -->
+    <section id="objetivos" class="section">
       <h2>Objetivos</h2>
-      <p><strong>Objetivo Geral:</strong> Analisar e intervir criticamente sobre os usos de sistemas de inteligência artificial em práticas de escrita na formação superior da UEL, articulando diagnóstico institucional, estudo de caso aprofundado na Pedagogia e ações de extensão e formação, de modo a qualificar experiências educativas e modos de autoria à luz de John Dewey.</p>
+
+      <p>
+        <strong>Objetivo geral:</strong> analisar e intervir criticamente sobre os usos de sistemas
+        de inteligência artificial em práticas de escrita na formação superior da UEL, articulando
+        diagnóstico institucional, estudo de caso aprofundado na Pedagogia e ações de extensão e
+        formação, de modo a qualificar experiências educativas e modos de autoria à luz de John Dewey.
+      </p>
 
       <h3>Eixo 1 – Diagnóstico transversal na UEL</h3>
-      <ol>
+      <div class="pill-axis">Eixo 1 · Diagnóstico institucional</div>
+
+      <ol start="1">
         <li>Mapear, em cursos de graduação selecionados, a frequência, os contextos e as finalidades de uso de IA em tarefas de escrita acadêmica.</li>
         <li>Identificar representações de estudantes e docentes sobre IA e seus efeitos percebidos na autoria, na integridade acadêmica e na formação.</li>
         <li>Analisar, com base em Dewey, indícios de experiências educativas e deseducativas associadas a diferentes configurações de uso de IA na escrita.</li>
       </ol>
 
       <h3>Eixo 2 – Estudo de caso: escrita de si e coescrita com IA na Pedagogia</h3>
+      <div class="pill-axis">Eixo 2 · Estudo de caso em Pedagogia</div>
+
       <ol start="4">
-        <li>Delimitar um referencial teórico-analítico que articule experiência educativa/deseducativa em Dewey e escrita de si como tecnologia de si em Foucault, aplicado à coescrita com IA na Pedagogia.</li>
+        <li>Delimitar referencial teórico-analítico que articule experiência educativa/deseducativa em Dewey e escrita de si como tecnologia de si em Foucault, aplicado à coescrita com IA na Pedagogia.</li>
         <li>Descrever e analisar práticas de escrita de si de estudantes de Pedagogia, com e sem uso de IA, distinguindo perfis de coescrita e seus efeitos sobre autoria e responsabilidade pela palavra.</li>
-        <li>Planejar, implementar e analisar uma sequência didática que explicite e problematize o uso de IA na escrita de si, observando mudanças nas práticas de coescrita, nas representações sobre IA e na autonomia autoral.</li>
+        <li>Planejar, implementar e analisar sequência didática que explicite e problematize o uso de IA na escrita de si, observando mudanças nas práticas de coescrita, nas representações sobre IA e na autonomia autoral.</li>
         <li>Sistematizar categorias analíticas e sínteses interpretativas sobre modos de subjetivação na escrita de si mediada por IA na formação inicial de pedagogos.</li>
       </ol>
 
       <h3>Eixo 3 – Extensão e formação: usos críticos de IA na escrita e na autoria na UEL</h3>
+      <div class="pill-axis">Eixo 3 · Extensão e formação</div>
+
       <ol start="8">
         <li>Traduzir os resultados dos Eixos 1 e 2 em diretrizes pedagógicas preliminares para o uso de IA em práticas de escrita na graduação.</li>
         <li>Planejar e realizar ações de extensão e formação (oficinas, encontros, materiais) voltadas a estudantes, docentes e coordenações, fomentando usos críticos e negociados de IA na escrita acadêmica e na escrita de si.</li>
         <li>Avaliar, de modo formativo, em que medida essas ações promovem experiências educativas de escrita (continuidade, interação e autoria responsável) e reduzem usos delegatórios e acríticos de IA.</li>
         <li>Sistematizar recomendações institucionais sobre IA, escrita e avaliação na UEL, a partir da articulação entre diagnóstico, estudo de caso e ações formativas.</li>
       </ol>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="metodologia">
+    <!-- METODOLOGIA -->
+    <section id="metodologia" class="section">
       <h2>Metodologia</h2>
-      <p>A pesquisa será organizada em três eixos articulados, combinando diagnóstico institucional, estudo de caso intensivo e desdobramentos formativos em nível de universidade. A abordagem geral é mista, com predominância qualitativa, e integra procedimentos de levantamento, intervenção pedagógica e análise interpretativa orientada por John Dewey e Michel Foucault.</p>
 
-      <h3>a) Eixo 1 – Diagnóstico transversal na UEL (desenho geral)</h3>
-      <p>O Eixo 1 será configurado como um estudo exploratório de caráter institucional, construído em articulação com pró-reitorias diretamente envolvidas com a formação superior (especialmente PROGRAD e, conforme a pertinência, PROPPG e PROEX), coordenações de curso e núcleos de formação docente. A referência são levantamentos recentes sobre usos de IA generativa em universidades que combinaram questionários on-line aplicados a estudantes e docentes para mapear frequência de uso, tipos de tarefa, percepções éticas e impactos percebidos na aprendizagem e na autoria. O primeiro movimento consiste em apresentar o projeto às instâncias competentes, buscando: (i) adesão política; (ii) indicação de cursos interessados em participar; e (iii) alinhamento com normativas internas já existentes sobre IA, plágio e integridade acadêmica.</p>
+      <p>
+        A pesquisa será organizada em três eixos articulados, combinando diagnóstico institucional,
+        estudo de caso intensivo e desdobramentos formativos em nível de universidade. A abordagem
+        geral é mista, com predominância qualitativa, e integra procedimentos de levantamento,
+        intervenção pedagógica e análise interpretativa orientada por John Dewey e Michel Foucault.
+      </p>
 
-      <h4>Recorte institucional e seleção de cursos</h4>
-      <p>A partir dessa articulação, será definido um conjunto intencional de cursos de graduação que represente diferentes culturas de escrita e de uso de tecnologia na UEL: por exemplo, pelo menos uma licenciatura, um bacharelado de área profissional (como Saúde ou Jurídicas) e um curso tecnológico ou de exatas. Estudos internacionais mostram que percepções e usos de IA variam relevantemente entre áreas (humanidades, ciências sociais, exatas/engenharias) e entre perfis de estudantes, o que reforça a importância de um recorte comparativo, ainda que não estatisticamente representativo de toda a universidade.</p>
-      <p>A ideia é trabalhar com toda a população de estudantes e docentes dos cursos selecionados (amostragem por conveniência, com convite censitário intra-curso), aceitando que as taxas de resposta variem entre unidades. Esse desenho favorece leituras comparativas entre cursos, anos de formação e funções (docente/estudante), ao mesmo tempo em que mantém o custo operacional dentro do possível para um pré-projeto institucional.</p>
+      <h3>a) Eixo 1 – Diagnóstico transversal na UEL</h3>
 
-      <h4>Construção dos instrumentos</h4>
-      <p>O diagnóstico se apoiará em dois questionários on-line paralelos, um para estudantes e outro para docentes, com núcleo comum de blocos temáticos e adaptações de linguagem e ênfase em cada versão. A construção desses instrumentos dialogará com escalas e surveys já utilizados em outras instituições para investigar conhecimento, uso e atitudes frente ao ChatGPT e a outras IAs generativas na educação superior, que incorporam blocos sobre frequência de uso, tipos de tarefa, motivações, riscos percebidos e impactos na aprendizagem.</p>
+      <p>
+        O Eixo 1 será configurado como estudo exploratório de caráter institucional, construído em
+        articulação com pró-reitorias diretamente envolvidas com a formação superior (especialmente
+        PROGRAD e, conforme a pertinência, PROPPG e PROEX), coordenações de curso e núcleos de formação
+        docente. Serão aplicados questionários on-line a estudantes e docentes de cursos selecionados,
+        com convites enviados por canais institucionais.
+      </p>
 
-      <table>
-        <caption>Blocos dos questionários do Eixo 1</caption>
-        <thead>
-        <tr>
-          <th>Bloco</th>
-          <th>Conteúdos principais</th>
-          <th>Exemplos de questões / variáveis</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Perfil sociodemográfico e acadêmico</td>
-          <td>Caracterização básica dos respondentes e da trajetória formativa/profissional.</td>
-          <td>Curso; ano/série; turno; modalidade (presencial/EaD); situação de trabalho (estudantes); área de atuação (docentes); experiência prévia com tecnologias educacionais.</td>
-        </tr>
-        <tr>
-          <td>Conhecimento e familiaridade com IA</td>
-          <td>Grau de exposição e entendimento básico sobre diferentes tipos de IA.</td>
-          <td>Se já ouviu falar/usou: chatbots, corretores gramaticais, tradutores automáticos, geradores de imagem/texto; autopercepção de capacidade de explicar “em termos simples” como funciona um modelo de linguagem; escala do tipo: “só ouvi falar / uso ocasionalmente / uso com alguma compreensão do funcionamento”.</td>
-        </tr>
-        <tr>
-          <td>Frequência e contextos de uso na escrita acadêmica</td>
-          <td>Em que medida a IA entra no cotidiano de escrita ligada às atividades do curso.</td>
-          <td>Escala tipo Likert (“nunca” a “sempre”) para tarefas como: rascunho de textos (resenhas, relatórios, ensaios, TCCs); revisão gramatical e estilística; síntese de textos longos; geração de exemplos, exercícios e planos de aula; programação/codificação, quando fizer sentido para o curso.</td>
-        </tr>
-        <tr>
-          <td>Modos de uso e perfis de coescrita</td>
-          <td>Como a IA é usada no processo de escrita e quanta autonomia fica com quem escreve.</td>
-          <td>Itens que distingam, por exemplo: “uso consultivo” (sugestões pontuais); “reescrita negociada” (pega a saída da IA e retrabalha bastante); “uso delegatório” (texto gerado quase todo pela IA); “não uso, mesmo quando é permitido”.</td>
-        </tr>
-        <tr>
-          <td>Percepções formativas e de autoria (dimensões deweyanas)</td>
-          <td>Efeitos percebidos na aprendizagem, na continuidade da formação e na responsabilidade pela palavra.</td>
-          <td>Afirmativas do tipo: “desde que uso IA, organizo melhor meus argumentos”; “depois que comecei a usar IA, releio menos os textos das disciplinas”; “quando uso IA, considero essencial revisar criticamente o que foi gerado antes de entregar”.</td>
-        </tr>
-        <tr>
-          <td>Integridade acadêmica e regulação local</td>
-          <td>Como estudantes e docentes leem os riscos, as regras e as práticas de controle no curso.</td>
-          <td>Percepção de risco de plágio e de detecção por ferramentas anti-IA; clareza das regras no curso (proibido, permitido com condições, sem orientação clara); experiências com casos concretos de infração ou dúvida; confiança nas regras e nos mecanismos de avaliação.</td>
-        </tr>
-        <tr>
-          <td>Questões abertas</td>
-          <td>Espaço para narrativas e sugestões que não cabem nas escalas fechadas.</td>
-          <td>Exemplos de situações em que a IA foi decisiva (positiva ou negativamente) para a escrita; relatos de dilemas éticos; sugestões sobre como a universidade deveria orientar o uso de IA em trabalhos e avaliações.</td>
-        </tr>
-        </tbody>
-      </table>
+      <p>
+        A definição dos cursos participantes buscará contemplar ao menos uma licenciatura, um
+        bacharelado de área profissional e um curso tecnológico ou de ciências exatas, de modo a
+        representar diferentes culturas de escrita e de uso de tecnologia na UEL. Trabalhar-se-á com
+        convite censitário intra-curso, aceitando variações nas taxas de resposta.
+      </p>
 
-      <p>A construção dos instrumentos será feita em ciclos. Primeiro, os pesquisadores elaboram uma versão inicial dos questionários, alinhada aos blocos descritos no quadro. Em seguida, essa versão é lida criticamente por um pequeno grupo de docentes e estudantes de áreas distintas, para ajuste de linguagem, termos técnicos e extensão. Por fim, realiza-se um pré-teste em uma turma piloto, a fim de verificar tempo médio de resposta, clareza das questões e necessidade de cortes ou reordenações. A partir desses retornos, chega-se à versão consolidada, preservando a lógica de blocos, mas adaptada às categorias de Dewey e ao contexto normativo da universidade.</p>
-      <p>A coleta será realizada por meio de formulário on-line institucional, preferencialmente vinculado ao e-mail acadêmico. Os convites serão enviados pelas coordenações de curso, por canais oficiais da PROGRAD e por docentes colaboradores que aceitarem divulgar o estudo em suas turmas. O período de resposta será delimitado (em torno de quatro a seis semanas), com lembretes periódicos para estimular a participação. Quando necessário, podem ser organizados momentos presenciais em sala de aula para preenchimento acompanhado, desde que a participação permaneça voluntária e o anonimato seja preservado.</p>
-      <p>Os dados fechados serão analisados por estatística descritiva, com cálculo de frequências, proporções e medidas de tendência central. Quando fizer sentido, serão realizados cruzamentos simples, como comparação entre áreas de curso, entre anos de formação ou entre estudantes e docentes em relação a determinados perfis de uso e percepções formativas. O objetivo não é produzir inferências estatísticas para toda a UEL, mas construir perfis comparativos que evidenciem diferenças relevantes entre grupos e contextos.</p>
-      <p>A partir dos blocos que tratam de modos de uso, percepções formativas e integridade acadêmica, será possível derivar tipologias provisórias de experiência com IA na escrita, como perfis que combinam uso intensivo e consultivo com sensação de fortalecimento da aprendizagem, ou uso mais delegatório associado a empobrecimento da autoria. Essas tipologias servirão de insumo direto para o aprofundamento do Eixo 2, ao selecionar dimensões da escrita de si que dialoguem com o panorama institucional, e para o desenho das ações do Eixo 3, ao indicar onde é mais urgente trabalhar formação e orientação.</p>
-      <p>As respostas abertas serão submetidas a análise de conteúdo temática, com leitura sucessiva para identificação de padrões de narrativa sobre experiências educativas e deseducativas, conflitos éticos, estratégias espontâneas de uso crítico ou de delegação acrítica e propostas dos próprios participantes para regulação e formação. Essa leitura qualitativa complementa os resultados descritivos das questões fechadas, evitando que o diagnóstico se reduza a números e permitindo uma compreensão mais fina de como estudantes e docentes estão, de fato, vivendo a escrita com IA na UEL. Em conjunto, esses procedimentos permitem que o Eixo 1 produza um mapa consistente dos usos, tensões e potencialidades da IA na escrita acadêmica, oferecendo base empírica para as decisões teórico-metodológicas e formativas dos demais eixos do projeto.</p>
+      <p>
+        O diagnóstico se apoiará em dois questionários paralelos, um para estudantes e outro para
+        docentes, com núcleo comum de blocos temáticos e adaptações em cada versão. Em termos de
+        conteúdo, cada instrumento incluirá, no mínimo, os blocos sintetizados na tabela a seguir.
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Bloco</th>
+            <th>Conteúdos principais</th>
+            <th>Exemplos de questões / variáveis</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Perfil sociodemográfico e acadêmico</td>
+            <td>Caracterização básica dos respondentes e da trajetória formativa/profissional.</td>
+            <td>Curso; ano/série; turno; modalidade; situação de trabalho (estudantes); área de atuação (docentes); experiência prévia com tecnologias educacionais.</td>
+          </tr>
+          <tr>
+            <td>Conhecimento e familiaridade com IA</td>
+            <td>Grau de exposição e entendimento básico sobre diferentes tipos de IA.</td>
+            <td>Contato com chatbots, corretores gramaticais, tradutores, geradores de texto/imagem; autopercepção de capacidade de explicar em termos simples como funciona um modelo de linguagem.</td>
+          </tr>
+          <tr>
+            <td>Frequência e contextos de uso na escrita acadêmica</td>
+            <td>Integração da IA ao cotidiano de escrita ligada às atividades do curso.</td>
+            <td>Escalas de frequência para tarefas como rascunho de textos, revisão gramatical, síntese de textos longos, geração de exemplos e exercícios, apoio a programação/codificação.</td>
+          </tr>
+          <tr>
+            <td>Modos de uso e perfis de coescrita</td>
+            <td>Forma como a IA é usada no processo de escrita e distribuição de agência entre autor e sistema.</td>
+            <td>Itens que diferenciem uso consultivo, reescrita negociada, uso delegatório, recusa deliberada de uso.</td>
+          </tr>
+          <tr>
+            <td>Percepções formativas e de autoria</td>
+            <td>Efeitos percebidos na aprendizagem, na continuidade da formação e na responsabilidade pela palavra.</td>
+            <td>Afirmativas sobre organização de argumentos, reconfiguração da revisão, sensação de ganho ou perda de autonomia, relação com a trajetória de escrita.</td>
+          </tr>
+          <tr>
+            <td>Integridade acadêmica e regulação local</td>
+            <td>Leitura de riscos, regras e práticas de controle no curso.</td>
+            <td>Percepção de risco de plágio; clareza das regras; experiências com casos concretos; confiança em mecanismos de avaliação.</td>
+          </tr>
+          <tr>
+            <td>Questões abertas</td>
+            <td>Espaço para narrativas e sugestões que não cabem nas escalas fechadas.</td>
+            <td>Relatos de situações em que a IA foi decisiva (positiva ou negativamente) para a escrita; dilemas éticos; propostas de regulação e formação.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        A construção dos instrumentos seguirá ciclos de elaboração, leitura crítica por pares e
+        pré-teste piloto em turma selecionada, com ajustes de linguagem, extensão e ordem das
+        questões. A coleta ocorrerá em período delimitado (cerca de quatro a seis semanas), com
+        lembretes periódicos. Os dados fechados serão tratados por estatística descritiva; as respostas
+        abertas serão submetidas a análise de conteúdo temática.
+      </p>
 
       <h3>b) Eixo 2 – Estudo de caso: escrita de si e coescrita com IA na Pedagogia</h3>
-      <p>A pesquisa será conduzida, neste eixo, como estudo de caso de abordagem mista, com predominância qualitativa, em turmas da graduação em Pedagogia da Universidade Estadual de Londrina (UEL). O campo empírico será composto por pelo menos um componente curricular sob responsabilidade de Darcísio Natal Muraro que trabalhe com escrita reflexiva em primeira pessoa. A expectativa é envolver cerca de quarenta estudantes maiores de 18 anos, regularmente matriculados, convidados a participar mediante assinatura de Termo de Consentimento Livre e Esclarecido. A investigação será integrada à dinâmica regular da disciplina, sem criação de turmas específicas para o projeto.</p>
-      <p>O procedimento empírico organiza-se em três momentos articulados. No primeiro momento, de caráter diagnóstico, será aplicado um questionário estruturado a todos os participantes, combinando itens em escala tipo Likert e questões abertas breves. O instrumento terá por objetivo levantar: (a) frequência e modos de uso de sistemas de inteligência artificial na escrita de si; (b) representações predominantes sobre esses sistemas (ferramenta, “voz melhor”, coautora, autoridade epistêmica etc.); e (c) nível inicial de compreensão sobre condições técnicas e institucionais de funcionamento da IA. Paralelamente, entre os que consentirem, será recolhido um texto de escrita de si já produzido na disciplina (diário de formação, narrativa autobiográfica ou texto reflexivo), acompanhado de uma ficha simples em que o estudante informa se utilizou IA nesse processo e como o fez (sem IA, apoio pontual, reformulação negociada, delegação ampla). Esse material servirá para caracterizar o cenário de uso de IA na turma e identificar perfis contrastantes de prática.</p>
-      <p>No segundo momento, a pesquisa se articula a uma sequência didática única, planejada em conjunto com o professor da disciplina. A sequência inicia com uma aula em que são apresentados, em termos operacionais, os critérios de experiência educativa e deseducativa em Dewey (continuidade e interação) e a noção foucaultiana de escrita de si como tecnologia de si, com foco em autoria e responsabilidade pela palavra. Em seguida, os estudantes produzem um primeiro texto de escrita de si vinculado aos objetivos da disciplina; o uso de IA é explicitamente permitido, mas não obrigatório. Ao final da atividade, cada participante preenche uma ficha de uso indicando se recorreu à IA, em que etapa do processo e como avalia esse recurso no texto produzido.</p>
-      <p>Em um encontro posterior, trechos anonimizados de textos produzidos com e sem IA são apresentados para discussão coletiva. A partir das categorias de Dewey e Foucault, a turma analisa diferenças em termos de voz, densidade reflexiva, continuidade com experiências de escrita anteriores e grau de delegação à inteligência algorítmica. Após essa problematização, os estudantes produzem um segundo texto de escrita de si, novamente com uso opcional de IA e com registro em ficha sobre as decisões de aceitar, recusar ou modificar sugestões algorítmicas. A comparação entre o primeiro e o segundo texto, articulada às fichas de uso, permitirá observar mudanças nas práticas de coescrita e nas representações sobre a tecnologia ao longo da sequência.</p>
-      <p>O terceiro momento aprofunda qualitativamente os resultados obtidos. Com base nas respostas aos questionários, nas fichas de uso e nas características dos textos, será selecionado um grupo intencional de aproximadamente doze a quinze estudantes que expressem perfis contrastantes (uso intensivo e delegatório de IA, uso negociado e reflexivo, recusa deliberada da IA mesmo quando autorizada). Com esses participantes serão realizadas entrevistas semiestruturadas, buscando reconstruir: a trajetória de relação com a escrita de si; as razões para usar ou não IA; os critérios mobilizados ao aceitar ou rejeitar sugestões algorítmicas; e a forma como percebem a autoria e a continuidade de suas experiências de escrita antes e depois da sequência. Quando houver adesão, esses estudantes também serão convidados a registrar, em breves diários reflexivos, percepções sobre o uso de IA ao longo das atividades. O pesquisador manterá um diário de campo com notas de observação das aulas, registrando interações, dúvidas, resistências e adesões relevantes para a interpretação dos dados.</p>
-      <p>A análise do material empírico será conduzida por meio de análise de conteúdo temática. Textos de escrita de si, transcrições das entrevistas, diários reflexivos e notas de campo serão codificados à luz das categorias de experiência educativa/deseducativa em Dewey (continuidade e interação) e da noção de escrita de si como tecnologia de si em Foucault, sem fechamento prévio do quadro categorial. A análise buscará identificar, em cada perfil de uso da IA, se a coescrita tende a reforçar processos de autoformação, reflexão e responsabilidade pela palavra ou se produz movimentos de heteronomia e delegação acrítica. Os dados quantitativos provenientes dos questionários e das fichas de uso serão tratados por estatística descritiva simples (frequências, distribuições, médias), com a função de caracterizar a turma e apoiar a leitura qualitativa dos casos, sem pretensão de generalização estatística.</p>
-      <p>Do ponto de vista ético, os materiais recolhidos serão anonimizados e não terão qualquer relação com a avaliação formal da disciplina. A participação na pesquisa será voluntária, e os estudantes poderão recusar-se a participar ou retirar seu consentimento sem prejuízo acadêmico. O professor responsável pela turma não terá acesso a informações individualizadas que permitam associar desempenho acadêmico às falas ou textos analisados. O uso de IA será sempre apresentado como objeto de reflexão pedagógica, não como exigência. Essa configuração metodológica busca garantir, ao mesmo tempo, viabilidade prática no contexto da graduação em Pedagogia da UEL e consistência analítica para examinar, em situação, como a coescrita com inteligência artificial interfere na escrita de si e na experiência da palavra.</p>
+
+      <p>
+        O Eixo 2 será conduzido como estudo de caso de abordagem mista, com predominância qualitativa,
+        em turmas da graduação em Pedagogia da UEL. O campo empírico compreenderá ao menos um componente
+        curricular sob responsabilidade de Darcísio Natal Muraro que trabalhe com escrita reflexiva em
+        primeira pessoa.
+      </p>
+
+      <p>
+        A investigação desenvolver-se-á em três momentos articulados: diagnóstico inicial (questionário
+        e coleta de textos de escrita de si já produzidos); sequência didática com uso problematizado de
+        IA; e aprofundamento qualitativo por meio de entrevistas e diários reflexivos com grupo
+        intencional de estudantes.
+      </p>
+
+      <p>
+        Na sequência didática, serão apresentados, em termos operacionais, os critérios de experiência
+        educativa/deseducativa em Dewey e a noção foucaultiana de escrita de si como tecnologia de si.
+        Os estudantes produzirão dois textos de escrita de si, com uso de IA permitido, mas não
+        obrigatório, registrando em fichas de uso as decisões de recorrer ou não à ferramenta e a forma
+        de incorporar as sugestões algorítmicas.
+      </p>
+
+      <p>
+        Com base nas fichas e nos textos, serão identificados perfis contrastantes de prática (uso
+        intensivo e delegatório; uso negociado e reflexivo; recusa deliberada da IA). Esses perfis
+        orientarão a seleção de participantes para entrevistas semiestruturadas, nas quais se buscará
+        reconstruir trajetórias de relação com a escrita de si, critérios mobilizados para aceitar ou
+        rejeitar saídas da IA e percepções sobre autoria e continuidade formativa.
+      </p>
+
+      <p>
+        Textos, transcrições de entrevistas, diários reflexivos e notas de campo comporão corpus
+        submetido a análise de conteúdo temática, com categorias inspiradas em Dewey e Foucault e
+        refinadas ao longo da leitura. Dados quantitativos de questionários e fichas de uso serão
+        utilizados para caracterização geral da turma, sem pretensão de generalização estatística.
+      </p>
 
       <h3>c) Eixo 3 – Extensão, formação e grupos de trabalho institucionais</h3>
-      <p>O Eixo 3 será desenvolvido em um segundo momento, tomando como insumos centrais os resultados do diagnóstico institucional (Eixo 1) e do estudo de caso na Pedagogia (Eixo 2). Seu foco é organizar, em escala de universidade, um processo de reflexão e elaboração de orientações que não se restrinja ao grupo de pesquisa, mas envolva docentes, estudantes e instâncias de gestão acadêmica. Em vez de propor uma “campanha” a favor ou contra a inteligência artificial, este eixo busca criar condições para que a UEL experimente, discuta e regule usos de IA em práticas de escrita em chave formativa, à luz dos critérios de continuidade e interação em Dewey.</p>
-      <p>Do ponto de vista operativo, o Eixo 3 articula três frentes principais: (a) formação de docentes, coordenações e núcleos de formação docente para lidar com IA, escrita e avaliação; (b) ações voltadas a estudantes, centradas em usos críticos de IA na escrita acadêmica e na escrita de si; e (c) processos de governança institucional, por meio de grupos de trabalho (GTs) que traduzam as evidências dos Eixos 1 e 2 em orientações e materiais de referência. Essas frentes supõem o envolvimento de pró-reitorias (em especial PROGRAD, PROEX e, quando pertinente, PROPPG), coordenações de curso, centros e colegiados, bem como de setores jurídicos e de tecnologia da informação em temas relacionados à integridade acadêmica e à infraestrutura digital.</p>
 
-      <table>
-        <caption>Linhas de ação do Eixo 3</caption>
-        <thead>
-        <tr>
-          <th>Linha do Eixo 3</th>
-          <th>Objetivo central</th>
-          <th>Público principal</th>
-          <th>Formatos / ações possíveis</th>
-          <th>Produtos esperados</th>
-          <th>Dependências institucionais mínimas</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>3.1 Formação de docentes e coordenações</td>
-          <td>Criar espaços de estudo e decisão pedagógica sobre IA, escrita e avaliação, à luz de Dewey.</td>
-          <td>Docentes, coordenações de curso, NDEs, núcleos de formação docente.</td>
-          <td>Ciclo de encontros formativos; oficinas curtas (2–3h) por área; seminário geral da UEL com apresentação dos dados dos Eixos 1 e 2.</td>
-          <td>Módulos formativos (roteiro de oficinas), slides, roteiros de discussão para uso interno em cursos; subsídios para PPCs e planos de ensino.</td>
-          <td>Apoio da PROGRAD e dos núcleos de formação docente; liberação de horário em semanas de formação; reconhecimento das horas como formação continuada.</td>
-        </tr>
-        <tr>
-          <td>3.2 Formação de estudantes: usos críticos de IA na escrita</td>
-          <td>Oferecer experiências concretas de escrita com IA que reforcem autonomia, reflexão e autoria responsável.</td>
-          <td>Estudantes de graduação (especialmente dos cursos participantes do Eixo 1 e da Pedagogia).</td>
-          <td>Oficinas abertas (“IA na escrita acadêmica”, “IA na escrita de si”); laboratórios práticos com momentos de coescrita, análise e reescrita; materiais autoformativos online.</td>
-          <td>Sequências didáticas adaptáveis por curso; guias curtos para estudantes (tipo “IA na escrita: 10 perguntas que você precisa fazer”); vídeos ou podcasts breves.</td>
-          <td>Parceria com PROEX e centros acadêmicos; apoio de coordenações para divulgar e reservar espaços; eventualmente monitores/bolsistas.</td>
-        </tr>
-        <tr>
-          <td>3.3 Governança e normativas (GTs institucionais)</td>
-          <td>Traduzir evidências empíricas em princípios e diretrizes institucionais sobre IA, escrita e integridade acadêmica.</td>
-          <td>Pró-reitorias (PROGRAD, PROPPG, PROEX), Procuradoria, TI, com participação de docentes e estudantes.</td>
-          <td>Criação de GT(s) temático(s): IA e avaliação; IA e integridade acadêmica; IA na formação docente; IA e escrita de si; reuniões periódicas para discutir dados dos Eixos 1 e 2 e rascunhar documentos.</td>
-          <td>Documento de referência institucional (nota técnica, parecer, ou conjunto de orientações); recomendações para PPCs e regulamentos de TCC; minutas de normativa sobre uso de IA em avaliações e trabalhos.</td>
-          <td>Instituição formal dos GTs pelas pró-reitorias; articulação com comissões já existentes (ética, integridade acadêmica, TI, formação docente).</td>
-        </tr>
-        <tr>
-          <td>3.4 Materiais de apoio e comunicação interna</td>
-          <td>Garantir que o debate e os instrumentos produzidos não fiquem restritos ao grupo de pesquisa, mas circulem na UEL.</td>
-          <td>Comunidade acadêmica em geral (estudantes, docentes, gestores, técnicos).</td>
-          <td>Caderno ou ebook com síntese dos resultados e propostas; página ou seção em site institucional; boletins eletrônicos; webinários gravados.</td>
-          <td>“Caderno UEL – IA, escrita e autoria” (versão PDF); modelos de atividades; FAQ institucional sobre IA na escrita; repositório de exemplos de boas práticas.</td>
-          <td>Equipe de comunicação institucional; espaço em site da UEL ou das pró-reitorias; apoio técnico para diagramação e divulgação.</td>
-        </tr>
-        </tbody>
-      </table>
+      <p>
+        O Eixo 3 será desenvolvido em segundo momento, tomando como insumos os resultados dos Eixos 1
+        e 2. Seu foco é organizar, em escala de universidade, processo de reflexão e elaboração de
+        orientações que envolva docentes, estudantes e instâncias de gestão acadêmica, articulando
+        formação, debate e governança institucional sobre IA, escrita e avaliação.
+      </p>
 
-      <p>A implementação efetiva dessas linhas dependerá de negociações institucionais e de uma adesão progressiva por parte dos cursos e pró-reitorias envolvidas. Do ponto de vista da pesquisa, contudo, o que importa é explicitar que o Eixo 3 não se limita a “divulgar resultados”, mas busca organizar experiências de escrita com IA em que estudantes e docentes possam explicitar seus usos, confrontá-los com critérios formativos e testar modos de coescrita que reforcem autonomia e responsabilidade pela palavra. Em termos de Dewey, trata-se de criar situações em que a IA seja inscrita em experiências educativas – que ampliam a continuidade da formação e qualificam a interação com o meio digital – em vez de consolidar rotinas deseducativas de delegação acrítica.</p>
-      <p>Os processos de formação e de governança previstos no Eixo 3 serão também acompanhados como objeto de análise qualitativa. Registros de oficinas, materiais produzidos, atas e versões sucessivas de documentos dos GTs constituirão um corpus adicional que permitirá observar como diferentes atores reinterpretam as evidências dos Eixos 1 e 2, negociam critérios para o uso de IA na escrita e disputam significados em torno da autoria, da integridade acadêmica e da educação democrática na universidade. Esse acompanhamento não tem por objetivo avaliar a UEL em termos normativos, mas compreender como uma instituição pública elabora, em situação, respostas às tensões trazidas pela IA na formação superior.</p>
-      <p>Em síntese, o Eixo 3 fecha o movimento do projeto ao transformar o diagnóstico transversal e o estudo de caso intensivo em oportunidades concretas de formação e de elaboração coletiva de orientações. Ao combinar ações formativas, grupos de trabalho institucionais e produção de materiais de apoio, pretende-se que a universidade disponha, ao final do percurso, não apenas de análises sobre o uso de IA na escrita, mas de instrumentos práticos para que cursos, docentes e estudantes possam reinscrever a técnica em experiências de escrita que preservem a palavra como exercício de autoria, responsabilidade e reflexão crítica.</p>
+      <p>
+        O eixo articula três frentes: (a) formação de docentes, coordenações e núcleos de formação
+        docente; (b) ações voltadas a estudantes; e (c) processos de governança institucional por meio
+        de grupos de trabalho (GTs). O quadro a seguir sintetiza as principais linhas de ação.
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Linha do Eixo 3</th>
+            <th>Objetivo central</th>
+            <th>Público principal</th>
+            <th>Formatos / ações possíveis</th>
+            <th>Produtos esperados</th>
+            <th>Dependências institucionais mínimas</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>3.1 Formação de docentes e coordenações</td>
+            <td>Criar espaços de estudo e decisão pedagógica sobre IA, escrita e avaliação, à luz de Dewey.</td>
+            <td>Docentes, coordenações de curso, NDEs, núcleos de formação docente.</td>
+            <td>Ciclos de encontros; oficinas por área; seminário geral apresentando dados dos Eixos 1 e 2.</td>
+            <td>Módulos formativos; roteiros de discussão; subsídios para PPCs e planos de ensino.</td>
+            <td>Apoio da PROGRAD e núcleos de formação; horários em semanas pedagógicas; reconhecimento de carga horária.</td>
+          </tr>
+          <tr>
+            <td>3.2 Formação de estudantes</td>
+            <td>Oferecer experiências concretas de escrita com IA que reforcem autonomia, reflexão e autoria responsável.</td>
+            <td>Estudantes de graduação (com ênfase nos cursos participantes do Eixo 1 e na Pedagogia).</td>
+            <td>Oficinas abertas; laboratórios práticos de coescrita, análise e reescrita; materiais autoformativos online.</td>
+            <td>Sequências didáticas adaptáveis; guias curtos; vídeos ou podcasts breves.</td>
+            <td>Parceria com PROEX e centros acadêmicos; apoio das coordenações; eventual participação de monitores/bolsistas.</td>
+          </tr>
+          <tr>
+            <td>3.3 Governança e normativas (GTs institucionais)</td>
+            <td>Traduzir evidências empíricas em princípios e diretrizes institucionais sobre IA, escrita e integridade acadêmica.</td>
+            <td>Pró-reitorias, Procuradoria, TI, com participação de docentes e estudantes.</td>
+            <td>Criação de GT(s) temático(s); reuniões periódicas para discutir dados e rascunhar documentos.</td>
+            <td>Documento de referência institucional; recomendações para PPCs; minutas de normativas sobre uso de IA.</td>
+            <td>Instituição formal dos GTs; articulação com comissões existentes (ética, integridade, TI, formação docente).</td>
+          </tr>
+          <tr>
+            <td>3.4 Materiais de apoio e comunicação interna</td>
+            <td>Garantir circulação ampla dos resultados e instrumentos produzidos.</td>
+            <td>Comunidade acadêmica em geral.</td>
+            <td>Elaboração de caderno ou ebook; página em site institucional; webinários gravados.</td>
+            <td>“Caderno UEL – IA, escrita e autoria”; modelos de atividades; FAQ institucional.</td>
+            <td>Equipe de comunicação; espaço em site da UEL ou pró-reitorias; apoio técnico para diagramação e divulgação.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Os processos de formação e governança serão também acompanhados como objeto de análise
+        qualitativa, compondo corpus adicional para leitura das formas como a UEL elabora respostas
+        às tensões trazidas pela IA na formação superior.
+      </p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="resultados">
+    <!-- RESULTADOS ESPERADOS -->
+    <section id="resultados" class="section">
       <h2>Resultados esperados, metas e indicadores</h2>
-      <p>O projeto pretende gerar resultados integrados nos três eixos propostos, combinando produtos acadêmicos, formativos e institucionais.</p>
 
-      <h3>a) Resultado 1 – Diagnóstico institucional sobre usos de IA na escrita na UEL (Eixo 1)</h3>
-      <p><strong>Meta:</strong> produzir um mapa sintético dos usos de IA em tarefas de escrita em cursos de graduação selecionados, contemplando estudantes e docentes.</p>
-      <p><strong>Indicadores:</strong> número de cursos participantes; número de respostas válidas de estudantes e docentes; relatório analítico com perfis de uso, representações predominantes e tensões formativas identificadas.</p>
+      <p>
+        O projeto pretende gerar resultados integrados nos três eixos, combinando produtos acadêmicos,
+        formativos e institucionais.
+      </p>
 
-      <h3>b) Resultado 2 – Estudo de caso aprofundado na Pedagogia sobre escrita de si e coescrita com IA (Eixo 2)</h3>
+      <p class="results-subtitle">a) Resultado 1 – Diagnóstico institucional sobre usos de IA na escrita na UEL (Eixo 1)</p>
+      <p><strong>Meta:</strong> produzir mapa sintético dos usos de IA em tarefas de escrita em cursos de graduação selecionados, contemplando estudantes e docentes.</p>
+      <p><strong>Indicadores:</strong> número de cursos participantes; número de respostas válidas; relatório analítico com perfis de uso, representações predominantes e tensões formativas.</p>
+
+      <p class="results-subtitle">b) Resultado 2 – Estudo de caso aprofundado na Pedagogia (Eixo 2)</p>
       <p><strong>Meta:</strong> caracterizar perfis de coescrita com IA na escrita de si de estudantes de Pedagogia e analisar seus efeitos sobre experiência formativa e autoria.</p>
-      <p><strong>Indicadores:</strong> quantidade de textos de escrita de si analisados (com e sem IA); número de participantes nas etapas de questionário, sequência didática e entrevistas; categorias analíticas consolidadas sobre modos de subjetivação e autoria.</p>
+      <p><strong>Indicadores:</strong> quantidade de textos analisados (com e sem IA); número de participantes em questionários, sequência didática e entrevistas; categorias consolidadas sobre modos de subjetivação e autoria.</p>
 
-      <h3>c) Resultado 3 – Sequência didática testada e documentada sobre IA em escrita autobiográfica (Eixo 2)</h3>
-      <p><strong>Meta:</strong> planejar, implementar e registrar uma sequência didática replicável sobre escrita de si e IA na formação inicial de professores.</p>
-      <p><strong>Indicadores:</strong> plano da sequência didática; materiais de apoio produzidos; avaliação dos estudantes sobre a experiência; análise comparativa entre textos antes e depois da intervenção.</p>
+      <p class="results-subtitle">c) Resultado 3 – Sequência didática testada e documentada (Eixo 2)</p>
+      <p><strong>Meta:</strong> planejar, implementar e registrar sequência didática replicável sobre escrita de si e IA na formação inicial de professores.</p>
+      <p><strong>Indicadores:</strong> plano da sequência; materiais de apoio; avaliação dos estudantes; análise comparativa entre textos antes e depois da intervenção.</p>
 
-      <h3>d) Resultado 4 – Ações de extensão e formação na UEL (Eixo 3)</h3>
-      <p><strong>Meta:</strong> realizar um conjunto de ações formativas dirigidas a docentes, coordenações e estudantes, articulando os achados dos Eixos 1 e 2.</p>
-      <p><strong>Indicadores:</strong> número de oficinas, encontros e seminários realizados; número de participantes por segmento (docentes, estudantes, gestores); registros avaliativos das atividades (questionários rápidos, devolutivas qualitativas).</p>
+      <p class="results-subtitle">d) Resultado 4 – Ações de extensão e formação na UEL (Eixo 3)</p>
+      <p><strong>Meta:</strong> realizar conjunto de ações formativas dirigidas a docentes, coordenações e estudantes, articulando achados dos Eixos 1 e 2.</p>
+      <p><strong>Indicadores:</strong> número de oficinas, encontros e seminários; participação por segmento; registros avaliativos das atividades.</p>
 
-      <h3>e) Resultado 5 – Subsídios para orientações institucionais (Eixo 3)</h3>
-      <p><strong>Meta:</strong> disponibilizar materiais de referência que possam fundamentar decisões de cursos, núcleos de formação docente e pró-reitorias sobre o uso de IA na escrita acadêmica.</p>
-      <p><strong>Indicadores:</strong> elaboração de caderno ou documento-síntese (“Caderno UEL – IA, escrita e autoria” ou equivalente); produção de guias curtos e sequências didáticas; participação em grupos de trabalho ou instâncias institucionais que discutam normativas sobre IA.</p>
+      <p class="results-subtitle">e) Resultado 5 – Subsídios para orientações institucionais (Eixo 3)</p>
+      <p><strong>Meta:</strong> disponibilizar materiais de referência que fundamentem decisões de cursos, núcleos de formação docente e pró-reitorias sobre uso de IA na escrita acadêmica.</p>
+      <p><strong>Indicadores:</strong> elaboração de caderno ou documento-síntese; produção de guias curtos e sequências didáticas; participação em grupos de trabalho ou instâncias institucionais que discutam normativas sobre IA.</p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="acompanhamento">
+    <!-- ACOMPANHAMENTO -->
+    <section id="acompanhamento" class="section">
       <h2>Acompanhamento e avaliação dos resultados</h2>
-      <p>O acompanhamento e a avaliação serão realizados de forma contínua, articulando os três eixos do projeto e combinando observação de processos, monitoramento de indicadores e devolutivas dos participantes. A intenção não é apenas verificar cumprimento de metas, mas produzir uma leitura qualitativa do que o projeto efetivamente acrescenta às experiências formativas e às discussões institucionais sobre IA e escrita na UEL.</p>
-      <p>Do ponto de vista interno, a coordenação manterá um ciclo regular de reuniões com a equipe para revisar o andamento das atividades em cada eixo (levantamentos do Eixo 1, desenvolvimento da sequência didática e coletas do Eixo 2, ações formativas e grupos de trabalho do Eixo 3). Essas reuniões gerarão registros sintéticos em forma de atas e relatórios trimestrais, nos quais serão anotados avanços, dificuldades, ajustes metodológicos e eventuais replanejamentos de cronograma. O diário de campo do pesquisador, já previsto para o Eixo 2, também será utilizado como instrumento de acompanhamento do conjunto do projeto, registrando efeitos não previstos, resistências, adesões e mudanças de percepção ao longo do tempo.</p>
-      <p>No acompanhamento dos resultados, serão privilegiadas três dimensões:</p>
-      <ul>
-        <li><strong>Processos de pesquisa e extensão</strong> – observação da aderência das atividades ao desenho proposto, da participação efetiva dos cursos e setores envolvidos, e da capacidade de articulação entre ensino, pesquisa e extensão. Aqui entram indicadores como número de cursos e coordenações engajadas, taxas de resposta aos questionários, presença nas oficinas e seminários, além de registros qualitativos sobre a qualidade dos encontros.</li>
-        <li><strong>Resultados formativos junto a estudantes e docentes</strong> – análise do que os participantes relatam ter aprendido sobre IA, escrita e autoria, e de como descrevem possíveis mudanças em suas práticas de escrita. Serão utilizados instrumentos breves de avaliação ao final das oficinas e da sequência didática, com questões que permitam identificar em que medida as experiências vividas reforçaram autonomia, reflexão e responsabilidade pela palavra ou, ao contrário, permaneceram próximas de usos mais delegatórios.</li>
-        <li><strong>Impactos institucionais</strong> – identificação de desdobramentos do projeto em nível de curso e de universidade: uso dos dados do Eixo 1 em reuniões de colegiado, incorporação de elementos da sequência didática em componentes curriculares, institucionalização de grupos de trabalho sobre IA, escrita e avaliação, elaboração de notas técnicas ou documentos orientadores. Nessas situações, serão coletados documentos, atas e versões sucessivas de textos produzidos, compondo um corpus para leitura analítica.</li>
+
+      <p>
+        O acompanhamento e a avaliação serão realizados de forma contínua, articulando os três eixos do
+        projeto e combinando observação de processos, monitoramento de indicadores e devolutivas dos
+        participantes. A intenção é produzir leitura qualitativa do que o projeto acrescenta às
+        experiências formativas e às discussões institucionais sobre IA e escrita na UEL.
+      </p>
+
+      <p>
+        A coordenação manterá ciclo regular de reuniões com a equipe, com registros em atas e relatórios
+        trimestrais. O diário de campo do pesquisador, previsto no Eixo 2, também será utilizado como
+        instrumento de acompanhamento do conjunto do projeto.
+      </p>
+
+      <p>
+        No acompanhamento dos resultados, serão privilegiadas três dimensões principais, sintetizadas
+        no quadro abaixo.
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Dimensão</th>
+            <th>Exemplos do que será observado</th>
+            <th>Fontes de evidência</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Processos</td>
+            <td>Participação de cursos e setores; continuidade das atividades; adequação dos instrumentos.</td>
+            <td>Atas de reunião; relatórios trimestrais; registros de campo.</td>
+          </tr>
+          <tr>
+            <td>Resultados formativos</td>
+            <td>Percepções de estudantes e docentes sobre mudanças em suas práticas; apropriação de categorias analíticas.</td>
+            <td>Questionários breves pós-oficinas; entrevistas; narrativas escritas; diários reflexivos.</td>
+          </tr>
+          <tr>
+            <td>Impactos institucionais</td>
+            <td>Uso de dados em decisões de curso e pró-reitorias; criação de GTs; produção de documentos orientadores.</td>
+            <td>Atas de colegiados; documentos institucionais; materiais produzidos no Eixo 3.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Ao final de cada ano, a equipe elaborará relatório de avaliação que sistematize esses elementos,
+        identificando pontos fortes, fragilidades e recomendações para o ciclo seguinte.
+      </p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
+    </section>
+
+    <!-- CRONOGRAMA -->
+    <section id="cronograma" class="section">
+      <h2>Cronograma (março/2026 a fevereiro/2028)</h2>
+
+      <h3>Ano 1 – 2026/2027</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Atividades</th>
+            <th>Período (mês/ano)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Tratativas iniciais com PROEX, PROGRAD, coordenações de curso e núcleos de formação docente para adesão ao projeto.</td>
+            <td>fev/2026 – mar/2026</td>
+          </tr>
+          <tr>
+            <td>Ajustes finais do projeto no SICAP, definição dos cursos participantes e composição da equipe de execução.</td>
+            <td>mar/2026 – abr/2026</td>
+          </tr>
+          <tr>
+            <td>Construção dos questionários do Eixo 1, validação por pares e pré-teste piloto.</td>
+            <td>abr/2026 – mai/2026</td>
+          </tr>
+          <tr>
+            <td>Aplicação dos questionários on-line do Eixo 1 nos cursos selecionados.</td>
+            <td>mai/2026 – jul/2026</td>
+          </tr>
+          <tr>
+            <td>Sistematização descritiva dos dados do Eixo 1.</td>
+            <td>jul/2026 – set/2026</td>
+          </tr>
+          <tr>
+            <td>Devolutiva interna preliminar do Eixo 1 a PROGRAD/PROEX e coordenações; ajustes finos no recorte do Eixo 2.</td>
+            <td>set/2026 – out/2026</td>
+          </tr>
+          <tr>
+            <td>Planejamento detalhado do Eixo 2: escolha do componente na Pedagogia, desenho da sequência didática, instrumentos e TCLE.</td>
+            <td>ago/2026 – out/2026</td>
+          </tr>
+          <tr>
+            <td>Aplicação do questionário diagnóstico do Eixo 2 e coleta do primeiro conjunto de textos de escrita de si.</td>
+            <td>out/2026 – nov/2026</td>
+          </tr>
+          <tr>
+            <td>Realização da sequência didática com uso problematizado de IA e produção do segundo conjunto de textos.</td>
+            <td>nov/2026 – dez/2026</td>
+          </tr>
+          <tr>
+            <td>Organização do corpus (textos, fichas de uso, notas de campo) e início da análise qualitativa do Eixo 2.</td>
+            <td>dez/2026 – fev/2027</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Ano 2 – 2027/2028</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Atividades</th>
+            <th>Período (mês/ano)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Continuidade e aprofundamento da análise qualitativa do Eixo 2.</td>
+            <td>mar/2027 – mai/2027</td>
+          </tr>
+          <tr>
+            <td>Integração analítica dos resultados dos Eixos 1 e 2.</td>
+            <td>mai/2027 – jun/2027</td>
+          </tr>
+          <tr>
+            <td>Planejamento detalhado das ações do Eixo 3, em articulação com PROEX, PROGRAD e cursos.</td>
+            <td>jun/2027 – jul/2027</td>
+          </tr>
+          <tr>
+            <td>Realização de oficinas e encontros de formação para docentes, coordenações e núcleos de formação docente.</td>
+            <td>jul/2027 – out/2027</td>
+          </tr>
+          <tr>
+            <td>Realização de oficinas e laboratórios de escrita com IA voltados a estudantes.</td>
+            <td>ago/2027 – nov/2027</td>
+          </tr>
+          <tr>
+            <td>Constituição e acompanhamento de grupos de trabalho institucionais sobre IA, escrita e avaliação.</td>
+            <td>ago/2027 – nov/2027</td>
+          </tr>
+          <tr>
+            <td>Produção do “Caderno UEL – IA, escrita e autoria” e de materiais de apoio.</td>
+            <td>set/2027 – dez/2027</td>
+          </tr>
+          <tr>
+            <td>Seminário de devolutiva dos resultados para a comunidade acadêmica e interlocução com outras IES estaduais.</td>
+            <td>nov/2027 – dez/2027</td>
+          </tr>
+          <tr>
+            <td>Consolidação dos relatórios técnico-científicos, artigos e prestação de contas do projeto.</td>
+            <td>jan/2028 – fev/2028</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
+    </section>
+
+    <!-- DISSEMINAÇÃO -->
+    <section id="disseminacao" class="section">
+      <h2>Disseminação dos resultados</h2>
+
+      <p>
+        A disseminação será pensada em chave de circulação interna e externa, de modo a evitar que
+        o conhecimento produzido permaneça restrito ao grupo de pesquisa. No âmbito acadêmico, os
+        dados dos Eixos 1 e 2 servirão de base para artigos em periódicos da área de Educação,
+        tecnologias digitais e formação docente, bem como para comunicações em eventos científicos
+        regionais e nacionais.
+      </p>
+
+      <p>
+        Em paralelo, serão produzidos materiais voltados especificamente à comunidade da UEL, com
+        destaque para um caderno ou ebook de síntese em linguagem acessível, reunindo resultados,
+        categorias analíticas e exemplos de atividades. Guias breves sobre uso crítico de IA na
+        escrita acadêmica e na escrita de si, dirigidos a estudantes e docentes, serão preparados
+        e divulgados em canais institucionais.
+      </p>
+
+      <p>
+        As ações de extensão do Eixo 3 constituem, elas mesmas, eixo de disseminação: oficinas,
+        ciclos formativos, encontros com coordenações e seminários funcionarão como espaços de
+        formação e de devolutiva dos resultados. Na medida em que grupos de trabalho institucionais
+        se consolidem, o projeto contribuirá com redação e revisão de notas técnicas, pareceres
+        ou orientações sobre IA, escrita e avaliação, ampliando a capilaridade de seus resultados
+        para além da duração formal da proposta.
+      </p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
+    </section>
+
+    <!-- RECURSOS -->
+    <section id="recursos" class="section">
+      <h2>Recursos da comunidade, recursos institucionais e busca de fomento externo</h2>
+
+      <p>
+        O desenvolvimento do projeto apoia-se, em primeiro lugar, nos recursos humanos e institucionais
+        já disponíveis na UEL. A participação de docentes e estudantes constitui o núcleo das atividades
+        de pesquisa e extensão: elaboração e aplicação de instrumentos, organização e mediação de
+        oficinas, sistematização de dados, produção de materiais didáticos e de comunicação.
+      </p>
+
+      <p>
+        A infraestrutura da universidade – salas de aula, laboratórios de informática, auditórios e
+        ambientes virtuais – será mobilizada para coletas, encontros formativos e devolutivas.
+        Espera-se articular o projeto às estruturas de formação docente e de discussão sobre integridade
+        acadêmica e tecnologias digitais, em especial PROEX, PROGRAD, núcleos de formação docente e
+        coordenações de curso.
+      </p>
+
+      <p>
+        Em termos financeiros, o projeto pode ser executado em grande medida com infraestrutura
+        ordinária da UEL, mas prevê necessidade de apoio pontual para impressão de materiais, serviços
+        gráficos, transporte eventual e apoio técnico à produção de materiais digitais, além de
+        eventual concessão de bolsas de apoio à extensão para estudantes.
+      </p>
+
+      <p>
+        Além dos recursos internos, o projeto se coloca em condição de disputar fomento externo,
+        em particular em linhas vinculadas à SEIA do Governo do Estado, apresentando-se como referência
+        em IA, escrita e autoria na formação superior nas universidades estaduais. Nesses casos,
+        recursos captados seriam direcionados à ampliação da capacidade analítica, à produção mais
+        robusta de materiais formativos e à realização de ações conjuntas entre instituições, sem
+        descaracterizar a base pública e comunitária do projeto.
+      </p>
+
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
+    </section>
+
+    <!-- REFERÊNCIAS -->
+    <section id="referencias" class="section">
+      <h2>Referências</h2>
+
+      <ul class="referencias-list">
+        <li>ACADEMY OF SCIENCE OF SOUTH AFRICA; SCIELO. ASSAf and SciELO guidelines for the use of artificial intelligence (AI) tools and resources in research communication. Pretoria: ASSAf, 2024. Disponível em: https://www.assaf.org.za/. Acesso em: 5 dez. 2025.</li>
+        <li>ACRE. Secretaria de Estado de Educação e Esporte. Educação promove oficina de Inteligência Artificial para professores. [S.l.], [s.d.]. Disponível em: &lt;https://agencia.ac.gov.br/educacao-promove-oficina-de-inteligencia-artificial-para-professores/&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>BRANDÃO, Rodrigo. O cenário atual de desenvolvimento da inteligência artificial no Brasil e internacional. Panorama Setorial da Internet, São Paulo, ano 16, n. 1, abr. 2024. Disponível em: https://cetic.br/. Acesso em: 5 dez. 2025.</li>
+        <li>CEARÁ. Secretaria da Educação. FormaCE promove curso “IA na Escola” para qualificar docentes em inteligência artificial. [S.l.], 18 jun. 2025. Disponível em: &lt;https://www.seduc.ce.gov.br/2025/06/18/formace-promove-curso-ia-na-escola-para-qualificar-docentes-em-inteligencia-artificial/&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>CNN BRASIL. IA vai ajudar alunos e professores na correção de tarefas em SP. São Paulo, [s.d.]. Disponível em: &lt;https://www.cnnbrasil.com.br/educacao/ia-vai-ajudar-alunos-e-professores-na-correcao-de-tarefas-em-sp/&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>COMMITTEE ON PUBLICATION ETHICS. Authorship and AI tools: COPE position statement. London: COPE, 2023. Disponível em: https://publicationethics.org. Acesso em: 5 dez. 2025.</li>
+        <li>DEWEY, John. Experiência e educação. Trad. Renata Gaspar. 2. ed. Petrópolis, RJ: Vozes, 2011.</li>
+        <li>DEVELOPMENTAID. AI goes to school: the global AI education race, opportunities and challenges. [S.l.], [s.d.]. Disponível em: &lt;https://www.developmentaid.org/news-stream/post/194647/ai-transforming-education&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>DIGITAL BRICKS. UAE mandates AI curriculum in schools. [S.l.], [s.d.]. Disponível em: &lt;https://www.digitalbricks.ai/blog-posts/uae-mandates-ai-curriculum-in-schools&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>FLANAGIN, Annette; KENDALL-TAYLOR, Jacob; BIBBINS-DOMINGO, Kirsten. Guidance for authors, peer reviewers, and editors on use of AI, language models, and chatbots. JAMA, Chicago, v. 330, n. 8, p. 702–703, 22 ago. 2023. DOI: 10.1001/jama.2023.12500.</li>
+        <li>FOUCAULT, Michel. A escrita de si. In: MOTTA, Manoel Barros da (Org.). Ética, sexualidade, política. Rio de Janeiro: Forense Universitária, 2004. p. 144–162.</li>
+        <li>FOUCAULT, Michel. Technologies of the self. In: MARTIN, Luther H.; GUTMAN, Huck; HUTTON, Patrick H. (Ed.). Technologies of the self: a seminar with Michel Foucault. Amherst: University of Massachusetts Press, 1988. p. 16–49.</li>
+        <li>GILES, Dwight E., Jr.; EYLER, Janet. The theoretical roots of service-learning in John Dewey: toward a theory of service-learning. Michigan Journal of Community Service Learning, [S.l.], v. 1, p. 77–85, 1994.</li>
+        <li>GRADUAÇÃO em IA: veja as faculdades que oferecem cursos. Na Prática, [s.l.], [s.d.]. Disponível em: &lt;https://napratica.org.br/noticias/graduacao-em-ia-faculdades&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>HAN, Byung-Chul. Sociedade da transparência. Petrópolis, RJ: Vozes, 2017.</li>
+        <li>HAN, Byung-Chul. No enxame: perspectivas do digital. Petrópolis, RJ: Vozes, 2018.</li>
+        <li>HEIDEGGER, Martin. A questão da técnica. In: ______. Ensaios e conferências. Trad. Emmanuel Carneiro Leão. Petrópolis, RJ: Vozes, 2001. p. 11–38.</li>
+        <li>MIAO, Fengchun; HOLMES, Wayne. Guidance for generative AI in education and research. Paris: UNESCO, 2023. Disponível em: https://unesdoc.unesco.org/. Acesso em: 5 dez. 2025.</li>
+        <li>NOLAN, Beatrice. ChatGPT listed as author or coauthor for more than 200 books in Amazon’s bookstore. Business Insider, [S.l.], 23 fev. 2023. Disponível em: https://www.businessinsider.com/chatgpt-ai-write-author-200-books-amazon-2023-2. Acesso em: 5 dez. 2025.</li>
+        <li>NOY, Shakked; ZHANG, Whitney. Experimental evidence on the productivity effects of generative artificial intelligence. Science, Washington, DC, v. 381, n. 6654, p. 187–192, 14 jul. 2023. DOI: 10.1126/science.adh4451.</li>
+        <li>PARANÁ. Governo do Estado. Governo destina R$ 6 milhões para universidades investirem em ensino de medicina com IA. Curitiba, [s.d.]. Disponível em: &lt;https://www.parana.pr.gov.br/aen/Noticia/Governo-destina-R-6-milhoes-para-universidades-investirem-em-ensino-de-medicina-com-IA&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>PIAUÍ. Secretaria de Inteligência Artificial, Economia Digital, Ciência, Tecnologia e Inovação. Seduc e SIA ampliam formação de professores para ensino de Inteligência Artificial nas escolas. [S.l.], [s.d.]. Disponível em: &lt;https://sia.pi.gov.br/seduc-e-sia-ampliam-formacao-de-professores-para-ensino-de-inteligencia-artificial-nas-escolas/&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>PUPA EDUCAÇÃO DIGITAL. AI Competency Framework for Teachers and Students. [S.l.], [s.d.]. Disponível em: &lt;https://pupaedu.digital/en/marco-referencial-de-competencias-em-ia-para-professores-e-estudantes/&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>RAMOS, Gabriela. Message from Gabriela Ramos, Assistant Director-General, Social and Human Sciences. In: UNITED NATIONS EDUCATIONAL, SCIENTIFIC AND CULTURAL ORGANIZATION. UNESCO recommendations on the ethics of artificial intelligence. Paris: UNESCO, 2023. p. 4–5.</li>
+        <li>STANFORD INSTITUTE FOR HUMAN-CENTERED ARTIFICIAL INTELLIGENCE. AI Index 2024 Annual Report. Stanford: Stanford University, 2024. Disponível em: https://aiindex.stanford.edu/report/. Acesso em: 5 dez. 2025.</li>
+        <li>UNITED NATIONS EDUCATIONAL, SCIENTIFIC AND CULTURAL ORGANIZATION. Recommendation on the ethics of artificial intelligence. Paris: UNESCO, 2021. Disponível em: https://unesdoc.unesco.org/. Acesso em: 5 dez. 2025.</li>
+        <li>UNIVERSIDADE ESTADUAL DE LONDRINA. Grupo de Trabalho – Inteligência Artificial, Tecnologias Educacionais e Ensino de Línguas. Portal UEL, [s.l.], [s.d.]. Disponível em: &lt;https://portal.uel.br/evento/grupo-de-trabalho-inteligencia-artificial-tecnologias-educacionais-e-ensino-de-linguas/&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>UNIVERSIDADE ESTADUAL DE LONDRINA. UEL apresenta proposta do curso de Ciência de Dados e IA para sociedade civil organizada. Operobal, Londrina, 16 nov. 2022. Disponível em: &lt;https://operobal.uel.br/cce/2022/11/16/uel-apresenta-proposta-do-curso-de-ciencia-de-dados-e-ia-para-sociedade-civil-organizada/&gt;. Acesso em: 6 dez. 2025.</li>
+        <li>WORLD ASSOCIATION OF MEDICAL EDITORS. Chatbots, generative AI, and scholarly manuscripts: WAME recommendations on chatbots and generative artificial intelligence in relation to scholarly publications. Colombian Medical, Cali, v. 54, n. 3, e1015868, 2023.</li>
       </ul>
 
-      <table>
-        <caption>Dimensões de acompanhamento e avaliação</caption>
-        <thead>
-        <tr>
-          <th>Dimensão</th>
-          <th>Exemplos do que será observado</th>
-          <th>Fontes de evidência</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Processos</td>
-          <td>Participação de cursos e setores; continuidade das atividades; adequação dos instrumentos.</td>
-          <td>Atas de reunião, relatórios trimestrais, registros de campo.</td>
-        </tr>
-        <tr>
-          <td>Resultados formativos</td>
-          <td>Percepções de estudantes e docentes sobre mudanças em suas práticas; apropriação de categorias analíticas (experiência educativa/deseducativa, tecnologia de si, autoria).</td>
-          <td>Questionários breves pós-oficinas, entrevistas, narrativas escritas, diários reflexivos.</td>
-        </tr>
-        <tr>
-          <td>Impactos institucionais</td>
-          <td>Uso dos dados em decisões de curso e pró-reitorias; criação de GTs; produção de documentos orientadores.</td>
-          <td>Atas de colegiados, documentos institucionais, materiais produzidos no Eixo 3.</td>
-        </tr>
-        </tbody>
-      </table>
-
-      <p>Ao final de cada ano, a equipe elaborará um relatório de avaliação que sistematize esses elementos, identificando pontos fortes, fragilidades e recomendações para o ciclo seguinte. Esses relatórios anuais servirão tanto para a prestação de contas junto à PROEX quanto para subsidiar decisões internas da UEL sobre a continuidade e o aprofundamento das ações iniciadas pelo projeto.</p>
+      <a href="#topo" class="back-to-top">Voltar ao topo</a>
     </section>
 
-    <section id="cronograma">
-      <h2>Cronograma (março/2026 a fevereiro/2028)</h2>
-      <p>O projeto está organizado em dois anos de execução, com etapas sobrepostas entre diagnóstico, estudo de caso, ações formativas e sistematização final.</p>
-
-      <p class="year-label">ANO 1 – 2026/2027</p>
-      <table>
-        <thead>
-        <tr>
-          <th>Atividades</th>
-          <th>Período (Mês/Ano)</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Tratativas iniciais com PROEX, PROGRAD, coordenações de curso e núcleos de formação docente para adesão ao projeto.</td>
-          <td>fev/2026 – mar/2026</td>
-        </tr>
-        <tr>
-          <td>Ajustes finais do projeto no SICAP, definição dos cursos participantes e composição da equipe de execução.</td>
-          <td>mar/2026 – abr/2026</td>
-        </tr>
-        <tr>
-          <td>Construção dos questionários do Eixo 1 (versões para estudantes e docentes), validação por pares e pré-teste piloto.</td>
-          <td>abr/2026 – mai/2026</td>
-        </tr>
-        <tr>
-          <td>Aplicação dos questionários on-line do Eixo 1 nos cursos selecionados (divulgação, coleta, lembretes, apoio em turmas).</td>
-          <td>mai/2026 – jul/2026</td>
-        </tr>
-        <tr>
-          <td>Sistematização descritiva dos dados do Eixo 1 (estatística descritiva, leitura das abertas, elaboração de perfis).</td>
-          <td>jul/2026 – set/2026</td>
-        </tr>
-        <tr>
-          <td>Devolutiva interna preliminar do Eixo 1 a PROGRAD/PROEX e coordenações; ajustes finos no recorte do Eixo 2.</td>
-          <td>set/2026 – out/2026</td>
-        </tr>
-        <tr>
-          <td>Planejamento detalhado do Eixo 2: escolha do componente na Pedagogia, desenho da sequência didática, instrumentos e TCLE.</td>
-          <td>ago/2026 – out/2026</td>
-        </tr>
-        <tr>
-          <td>Aplicação do questionário diagnóstico do Eixo 2 e coleta do primeiro conjunto de textos de escrita de si.</td>
-          <td>out/2026 – nov/2026</td>
-        </tr>
-        <tr>
-          <td>Realização da sequência didática com uso problematizado de IA e produção do segundo conjunto de textos de escrita de si.</td>
-          <td>nov/2026 – dez/2026</td>
-        </tr>
-        <tr>
-          <td>Organização do corpus (textos, fichas de uso, notas de campo) e início da análise qualitativa do Eixo 2.</td>
-          <td>dez/2026 – fev/2027</td>
-        </tr>
-        </tbody>
-      </table>
-
-      <p class="year-label">ANO 2 – 2027/2028</p>
-      <table>
-        <thead>
-        <tr>
-          <th>Atividades</th>
-          <th>Período (Mês/Ano)</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Continuidade e aprofundamento da análise qualitativa do Eixo 2 (textos, entrevistas, diários reflexivos, notas de campo).</td>
-          <td>mar/2027 – mai/2027</td>
-        </tr>
-        <tr>
-          <td>Integração analítica dos resultados dos Eixos 1 e 2 (sínteses comparativas, categorias de experiência e perfis de coescrita).</td>
-          <td>mai/2027 – jun/2027</td>
-        </tr>
-        <tr>
-          <td>Planejamento detalhado das ações do Eixo 3 (formações, oficinas, GTs, materiais), em articulação com PROEX, PROGRAD e cursos.</td>
-          <td>jun/2027 – jul/2027</td>
-        </tr>
-        <tr>
-          <td>Realização de oficinas e encontros de formação para docentes, coordenações e núcleos de formação docente (linha 3.1).</td>
-          <td>jul/2027 – out/2027</td>
-        </tr>
-        <tr>
-          <td>Realização de oficinas e laboratórios de escrita com IA voltados a estudantes (linha 3.2).</td>
-          <td>ago/2027 – nov/2027</td>
-        </tr>
-        <tr>
-          <td>Constituição e acompanhamento de grupos de trabalho institucionais sobre IA, escrita e avaliação; elaboração de minutas/pareceres.</td>
-          <td>ago/2027 – nov/2027</td>
-        </tr>
-        <tr>
-          <td>Produção do “Caderno UEL – IA, escrita e autoria” e de materiais de apoio (guias, sequências didáticas, FAQs).</td>
-          <td>set/2027 – dez/2027</td>
-        </tr>
-        <tr>
-          <td>Seminário de devolutiva dos resultados para a comunidade acadêmica e interlocução com outras IES estaduais.</td>
-          <td>nov/2027 – dez/2027</td>
-        </tr>
-        <tr>
-          <td>Consolidação dos relatórios técnico-científicos, artigos e prestação de contas do projeto.</td>
-          <td>jan/2028 – fev/2028</td>
-        </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="disseminacao">
-      <h2>Disseminação dos resultados</h2>
-      <p>A disseminação dos resultados será pensada em chave de circulação interna e externa, de modo a evitar que o conhecimento produzido permaneça restrito ao grupo de pesquisa. No âmbito acadêmico, os dados dos Eixos 1 e 2 servirão de base para artigos em periódicos da área de Educação, tecnologias digitais e formação docente, bem como para comunicações em eventos científicos regionais e nacionais. A análise articulada entre diagnóstico institucional, estudo de caso e ações formativas oferecerá material consistente para discutir, com evidências, o lugar da IA na escrita e na autoria na formação superior.</p>
-      <p>Em paralelo, o projeto buscará produzir materiais voltados especificamente à comunidade da UEL. Entre eles, destaca-se a elaboração de um caderno ou ebook de síntese, em linguagem acessível, reunindo os principais resultados, categorias analíticas e exemplos de atividades que podem ser apropriadas por cursos de diferentes áreas. Esse material deverá dialogar diretamente com a prática docente e com a experiência de estudantes, propondo perguntas e roteiros de trabalho mais do que prescrições rígidas. Guias breves sobre uso crítico de IA na escrita acadêmica e na escrita de si, dirigidos a estudantes e docentes, também serão preparados e divulgados em canais institucionais, como páginas eletrônicas da PROEX e da PROGRAD, ambientes virtuais de aprendizagem e boletins internos.</p>
-      <p>As ações de extensão do Eixo 3 constituem, elas mesmas, um eixo de disseminação. Oficinas, ciclos formativos, encontros com coordenações e seminários abertos funcionarão tanto como espaços de formação quanto como momentos de devolutiva dos resultados parciais e finais. Nesses encontros, os dados serão apresentados em diálogo com as experiências dos participantes, buscando produzir reflexão situada sobre IA, escrita, autoria e educação democrática na UEL. Por fim, na medida em que grupos de trabalho institucionais venham a se consolidar, o projeto contribuirá com a redação e revisão de notas técnicas, pareceres ou orientações sobre IA, escrita e avaliação, ampliando a capilaridade de seus resultados para além da duração formal da proposta.</p>
-    </section>
-
-    <section id="recursos">
-      <h2>Recursos da comunidade, recursos institucionais e busca de fomento externo</h2>
-      <p>O desenvolvimento do projeto apoia-se, em primeiro lugar, nos recursos humanos e institucionais já disponíveis na UEL. Do lado da comunidade acadêmica, a participação de docentes, estudantes de graduação e, quando pertinente, de pós-graduação constitui o núcleo das atividades de pesquisa e extensão: elaboração e aplicação de instrumentos, organização e mediação de oficinas, sistematização de dados, produção de materiais didáticos e de comunicação. A infraestrutura da universidade – salas de aula, laboratórios de informática, auditórios, ambientes virtuais – será mobilizada para a realização das coletas, dos encontros formativos e das devolutivas.</p>
-      <p>Em termos de recursos institucionais, espera-se articular o projeto às estruturas já existentes de formação docente e de discussão sobre integridade acadêmica e tecnologias digitais, em especial a PROEX, a PROGRAD, núcleos de formação docente e coordenações de curso. Essa articulação inclui apoio na divulgação das atividades, reserva de espaços físicos, inserção das ações em calendários de semanas pedagógicas ou de formação continuada e, quando possível, reconhecimento de carga horária de participação para docentes e estudantes.</p>
-      <p>Quanto aos recursos financeiros, o projeto pode ser executado em grande medida com a infraestrutura ordinária da UEL, mas prevê a necessidade de apoio pontual para itens como impressão de materiais, serviços gráficos básicos, transporte eventual para atividades presenciais em diferentes unidades, apoio técnico para produção de materiais digitais e, se houver disponibilidade, bolsas de apoio à extensão para estudantes. Essas demandas serão detalhadas nos campos específicos de “Recursos da Comunidade” e “Recursos Financeiros” do cadastro na PROEX, respeitando os limites e diretrizes da universidade.</p>
-      <p>Além dos recursos internos, o projeto se coloca em condição de disputar fomento externo, em particular em linhas vinculadas à SEIA do Governo do Estado, apresentando-se como referência em IA, escrita e autoria na formação superior nas universidades estaduais. A proposta poderá ser submetida, quando houver editais pertinentes, como projeto de referência para o sistema estadual, articulando a experiência piloto na UEL com possibilidades de cooperação interinstitucional entre as universidades estaduais do Paraná. Nesses casos, eventuais recursos captados junto à SEIA seriam direcionados à ampliação da capacidade analítica (apoio técnico em análise de dados), à produção mais robusta de materiais formativos e à realização de ações de extensão conjuntas entre instituições, sem descaracterizar a base comunitária e pública do projeto.</p>
-    </section>
-
-    <section id="referencias">
-      <h2>Referências</h2>
-      <p>ACADEMY OF SCIENCE OF SOUTH AFRICA; SCIELO. ASSAf and SciELO guidelines for the use of artificial intelligence (AI) tools and resources in research communication. Pretoria: ASSAf, 2024. Disponível em: https://www.assaf.org.za/. Acesso em: 5 dez. 2025.</p>
-      <p>BRANDÃO, Rodrigo. O cenário atual de desenvolvimento da inteligência artificial no Brasil e internacional. Panorama Setorial da Internet, São Paulo, ano 16, n. 1, abr. 2024. Disponível em: https://cetic.br/. Acesso em: 5 dez. 2025.</p>
-      <p>COMMITTEE ON PUBLICATION ETHICS. Authorship and AI tools: COPE position statement. London: COPE, 2023. Disponível em: https://publicationethics.org. Acesso em: 5 dez. 2025.</p>
-      <p>DEWEY, John. Experiência e educação. Trad. Renata Gaspar. 2. ed. Petrópolis, RJ: Vozes, 2011.</p>
-      <p>FLANAGIN, Annette; KENDALL-TAYLOR, Jacob; BIBBINS-DOMINGO, Kirsten. Guidance for authors, peer reviewers, and editors on use of AI, language models, and chatbots. JAMA, Chicago, v. 330, n. 8, p. 702–703, 22 ago. 2023. DOI: 10.1001/jama.2023.12500.</p>
-      <p>FOUCAULT, Michel. A escrita de si. In: MOTTA, Manoel Barros da (Org.). Ética, sexualidade, política. Rio de Janeiro: Forense Universitária, 2004. p. 144-162.</p>
-      <p>FOUCAULT, Michel. Technologies of the self. In: MARTIN, Luther H.; GUTMAN, Huck; HUTTON, Patrick H. (Ed.). Technologies of the self: a seminar with Michel Foucault. Amherst: University of Massachusetts Press, 1988. p. 16-49.</p>
-      <p>GILES, Dwight E., Jr.; EYLER, Janet. The theoretical roots of service-learning in John Dewey: toward a theory of service-learning. Michigan Journal of Community Service Learning, [S.l.], v. 1, p. 77-85, 1994.</p>
-      <p>HAN, Byung-Chul. Sociedade da transparência. Petrópolis, RJ: Vozes, 2017.</p>
-      <p>HAN, Byung-Chul. No enxame: perspectivas do digital. Petrópolis, RJ: Vozes, 2018.</p>
-      <p>HEIDEGGER, Martin. A questão da técnica. In: ______. Ensaios e conferências. Trad. Emmanuel Carneiro Leão. Petrópolis, RJ: Vozes, 2001. p. 11-38.</p>
-      <p>MIAO, Fengchun; HOLMES, Wayne. Guidance for generative AI in education and research. Paris: UNESCO, 2023. Disponível em: https://unesdoc.unesco.org/. Acesso em: 5 dez. 2025.</p>
-      <p>NOLAN, Beatrice. ChatGPT listed as author or coauthor for more than 200 books in Amazon’s bookstore. Business Insider, [S.l.], 23 fev. 2023. Disponível em: https://www.businessinsider.com/chatgpt-ai-write-author-200-books-amazon-2023-2. Acesso em: 5 dez. 2025.</p>
-      <p>NOY, Shakked; ZHANG, Whitney. Experimental evidence on the productivity effects of generative artificial intelligence. Science, Washington, DC, v. 381, n. 6654, p. 187–192, 14 jul. 2023. DOI: 10.1126/science.adh4451.</p>
-      <p>RAMOS, Gabriela. Message from Gabriela Ramos, Assistant Director-General, Social and Human Sciences. In: UNITED NATIONS EDUCATIONAL, SCIENTIFIC AND CULTURAL ORGANIZATION. UNESCO recommendations on the ethics of artificial intelligence. Paris: UNESCO, 2023. p. 4–5.</p>
-      <p>STANFORD INSTITUTE FOR HUMAN-CENTERED ARTIFICIAL INTELLIGENCE. AI Index 2024 Annual Report. Stanford: Stanford University, 2024. Disponível em: https://aiindex.stanford.edu/report/. Acesso em: 5 dez. 2025.</p>
-      <p>UNITED NATIONS EDUCATIONAL, SCIENTIFIC AND CULTURAL ORGANIZATION. Recommendation on the ethics of artificial intelligence. Paris: UNESCO, 2021. Disponível em: https://unesdoc.unesco.org/. Acesso em: 5 dez. 2025.</p>
-      <p>WORLD ASSOCIATION OF MEDICAL EDITORS. Chatbots, generative AI, and scholarly manuscripts: WAME recommendations on chatbots and generative artificial intelligence in relation to scholarly publications. Colombian Medical, Cali, v. 54, n. 3, e1015868, 2023.</p>
-    </section>
-
-    <footer>
-      Versão HTML para leitura pública.    </footer>
   </article>
 </div>
+
 </body>
 </html>
